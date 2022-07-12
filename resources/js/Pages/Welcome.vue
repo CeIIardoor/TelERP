@@ -2,7 +2,7 @@
   <Head>
     <meta
       type="description"
-      content="Information about my app"
+      content="TelERP, l'application de la gestion de vos abonnements téléphoniques."
       head-key="description"
     >
   <title>Index</title>
@@ -123,7 +123,7 @@
               <span class="block text-emerald-600 xl:inline">ERP abonnements</span>
             </h1>
             <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-              Une application Web qui regroupe l'ensemble des tâches liées à l'utilisation et à la gestion des abonnements téléphoniques au sein d'une organisation.
+              Une PWA qui regroupe l'ensemble des tâches liées à l'utilisation et à la gestion des abonnements téléphoniques au sein d'une organisation.
             </p>
           </div>
         </main>
@@ -131,7 +131,7 @@
     </div>
     <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
       <img
-        class="min-h-42 w-full object-cover lg:w-full lg:h-screen"
+        class="w-full object-scale-down"
         src="/assets/img/index.jpg"
         alt=""
       >
@@ -146,6 +146,7 @@ import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import { MenuIcon, XIcon, HomeIcon } from "@heroicons/vue/outline";
 const navigation = [
   { name: "A propos", href: "/apropos" },
+  { name: "Tarifs", href: "/tarifs" },
   { name: "Documentation", href: "/docs" },
 ];
 export default {
