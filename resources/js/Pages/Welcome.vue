@@ -1,188 +1,171 @@
-<script setup>
-import { Head, Link } from '@inertiajs/inertia-vue3';
-
-defineProps({
-    canLogin: Boolean,
-    canRegister: Boolean,
-    laravelVersion: String,
-    phpVersion: String,
-})
-</script>
-
 <template>
-    <Head title="Welcome" />
+  <Head>
+    <meta
+      type="description"
+      content="Information about my app"
+      head-key="description"
+    >
+  <title>Index</title>
+  </Head>
+  <section class="h-screen">
 
-    <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
-        <div v-if="canLogin" class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-            <Link v-if="$page.props.auth.user" :href="route('dashboard')" class="text-sm text-gray-700 underline">
-                Dashboard
-            </Link>
+  <div class="relative bg-gradient-to-b from-stone-100 to-white overflow-hidden">
+    <div class="mx-auto">
+      <div class="relative z-10 pb-8 bg-gradient-to-b from-stone-100 to-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full xl:pb-32">
+        <svg
+          class="hidden z-20 lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2"
+          fill="currentColor"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <polygon points="50,0 100,0 50,100 0,100" />
+        </svg>
 
-            <template v-else>
-                <Link :href="route('login')" class="text-sm text-gray-700 underline">
-                    Se connecter
+        <Popover>
+          <div class="bg-gradient-to-b from-emerald-200 to-stone-100 relative pt-6 pb-3 px-4 sm:px-6 lg:px-8">
+            <nav class="relative flex items-center justify-between sm:h-10 lg:justify-start" aria-label="Global">
+              <div class="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
+                <div class="flex items-center justify-between w-full md:w-auto">
+                  <Link href="/">
+                    <HomeIcon class="h-8 w-8 mb-3 text-green-400" />
+                  </Link>
+                  <div class="-mr-2 flex items-center md:hidden">
+                    <PopoverButton class="bg-gradient-to-b from-stone-100 to-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-lime-500">
+                      <MenuIcon class="h-6 w-6" aria-hidden="true" />
+                    </PopoverButton>
+                  </div>
+                </div>
+              </div>
+              <div class="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
+                <Link
+                  v-for="item in navigation"
+                  :key="item.name"
+                  :href="item.href"
+                  class="font-medium text-gray-500 hover:text-gray-900"
+                >
+                  {{ item.name }}
                 </Link>
-
-                <Link v-if="canRegister" :href="route('register')" class="ml-4 text-sm text-gray-700 underline">
-                    S'enregistrer
+                <Link
+                  v-if="authenticated"
+                  href="/dashboard"
+                  class="font-medium text-lime-600 hover:text-lime-500"
+                >
+                  Dashboard
                 </Link>
-            </template>
-        </div>
+                <Link
+                  v-else
+                  href="/login"
+                  class="font-medium text-lime-600 hover:text-lime-500"
+                >
+                  Se connecter
+                </Link>
+              </div>
+            </nav>
+          </div>
 
-        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-                <div class="w-full sm:w-auto">
-                    <h1 class="text-3xl font-bold leading-tight text-center text-white sm:text-left">
-                        Bienvenue sur TelERP
-                    </h1>
+          <transition
+            enter-active-class="duration-150 ease-out"
+            enter-from-class="opacity-0 scale-95"
+            enter-to-class="opacity-100 scale-100"
+            leave-active-class="duration-100 ease-in"
+            leave-from-class="opacity-100 scale-100"
+            leave-to-class="opacity-0 scale-95"
+          >
+            <PopoverPanel focus class="absolute z-10 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
+              <div class="rounded-lg shadow-md bg-gradient-to-b from-stone-100 to-white ring-1 ring-black ring-opacity-5 overflow-hidden">
+                <div class="px-5 pt-4 flex items-center justify-between">
+                  <div>
+                    <Link href="/">
+                        <HomeIcon class="h-8 w-8 text-green-400" />
+                    </Link>
+                  </div>
+                  <div class="-mr-2">
+                    <PopoverButton class="bg-gradient-to-b from-stone-100 to-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-lime-500">
+                      <XIcon class="h-6 w-6" aria-hidden="true" />
+                    </PopoverButton>
+                  </div>
                 </div>
-            </div>
-
-            <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
-                <div class="grid grid-cols-1 md:grid-cols-2">
-                    <div class="p-6">
-                        <div class="flex items-center">
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                            <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://cellardoor.info/docs" class="underline text-gray-900 dark:text-white">Documentation</a></div>
-                        </div>
-
-                        <div class="ml-12">
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                Lien pour notre documentation.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
-                        <div class="flex items-center">
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laracasts.com" class="underline text-gray-900 dark:text-white">Laracasts</a></div>
-                        </div>
-
-                        <div class="ml-12">
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="p-6 border-t border-gray-200 dark:border-gray-700">
-                        <div class="flex items-center">
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
-                            <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laravel-news.com/" class="underline text-gray-900 dark:text-white">Laravel News</a></div>
-                        </div>
-
-                        <div class="ml-12">
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
-                        <div class="flex items-center">
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Vibrant Ecosystem</div>
-                        </div>
-
-                        <div class="ml-12">
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com" class="underline">Forge</a>, <a href="https://vapor.laravel.com" class="underline">Vapor</a>, <a href="https://nova.laravel.com" class="underline">Nova</a>, and <a href="https://envoyer.io" class="underline">Envoyer</a> help you take your projects to the next level. Pair them with powerful open source libraries like <a href="https://laravel.com/docs/billing" class="underline">Cashier</a>, <a href="https://laravel.com/docs/dusk" class="underline">Dusk</a>, <a href="https://laravel.com/docs/broadcasting" class="underline">Echo</a>, <a href="https://laravel.com/docs/horizon" class="underline">Horizon</a>, <a href="https://laravel.com/docs/sanctum" class="underline">Sanctum</a>, <a href="https://laravel.com/docs/telescope" class="underline">Telescope</a>, and more.
-                            </div>
-                        </div>
-                    </div>
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                  <Link
+                    v-for="item in navigation"
+                    :key="item.name"
+                    :href="item.href"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                  >
+                    {{ item.name }}
+                  </Link>
                 </div>
-            </div>
+                <Link
+                  v-if="authenticated"
+                  href="/dashboard"
+                  class="block w-full px-5 py-3 text-center font-medium text-lime-600 bg-gray-50 hover:bg-gray-100"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  v-else
+                  href="/login"
+                  class="block w-full px-5 py-3 text-center font-medium text-lime-600 bg-gray-50 hover:bg-gray-100"
+                >
+                  Se connecter
+                </Link>
+              </div>
+            </PopoverPanel>
+          </transition>
+        </Popover>
 
-            <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
-                <div class="text-center text-sm text-gray-500 sm:text-left">
-                    <div class="flex items-center">
-                        <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor" class="-mt-px w-5 h-5 text-gray-400">
-                            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                        </svg>
-
-                        <a href="https://laravel.bigcartel.com" class="ml-1 underline">
-                            Shop
-                        </a>
-
-                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="ml-4 -mt-px w-5 h-5 text-gray-400">
-                            <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                        </svg>
-
-                        <a href="https://github.com/sponsors/taylorotwell" class="ml-1 underline">
-                            Sponsor
-                        </a>
-                    </div>
-                </div>
-
-                <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
-                    Laravel v{{ laravelVersion }} (PHP v{{ phpVersion }})
-                </div>
-            </div>
-        </div>
+        <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+          <div class="sm:text-center lg:text-left">
+            <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+              <span class="block xl:inline">MedinaTech</span>
+              <br>
+              <span class="block text-emerald-600 xl:inline">ERP abonnements</span>
+            </h1>
+            <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+              Une application Web qui regroupe l'ensemble des tâches liées à l'utilisation et à la gestion des abonnements téléphoniques au sein d'une organisation.
+            </p>
+          </div>
+        </main>
+      </div>
     </div>
+    <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+      <img
+        class="min-h-42 w-full object-cover lg:w-full lg:h-screen"
+        src="/assets/img/index.jpg"
+        alt=""
+      >
+    </div>
+  </div>
+  </section>
 </template>
 
-<style scoped>
-    .bg-gray-100 {
-        background-color: #f7fafc;
-        background-color: rgba(247, 250, 252, var(--tw-bg-opacity));
+
+<script>
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
+import { MenuIcon, XIcon, HomeIcon } from "@heroicons/vue/outline";
+const navigation = [
+  { name: "A propos", href: "/apropos" },
+  { name: "Documentation", href: "/docs" },
+];
+export default {
+  components: {
+    Popover,
+    PopoverButton,
+    PopoverPanel,
+    MenuIcon,
+    XIcon,
+    HomeIcon
+  },
+  setup() {
+    return {
+      navigation,
+    };
+  },
+  computed: {
+    authenticated() {
+      return this.$page.props.auth.user != null;
     }
-
-    .border-gray-200 {
-        border-color: #edf2f7;
-        border-color: rgba(237, 242, 247, var(--tw-border-opacity));
-    }
-
-    .text-gray-400 {
-        color: #cbd5e0;
-        color: rgba(203, 213, 224, var(--tw-text-opacity));
-    }
-
-    .text-gray-500 {
-        color: #a0aec0;
-        color: rgba(160, 174, 192, var(--tw-text-opacity));
-    }
-
-    .text-gray-600 {
-        color: #718096;
-        color: rgba(113, 128, 150, var(--tw-text-opacity));
-    }
-
-    .text-gray-700 {
-        color: #4a5568;
-        color: rgba(74, 85, 104, var(--tw-text-opacity));
-    }
-
-    .text-gray-900 {
-        color: #1a202c;
-        color: rgba(26, 32, 44, var(--tw-text-opacity));
-    }
-
-    @media (prefers-color-scheme: dark) {
-        .dark\:bg-gray-800 {
-            background-color: #2d3748;
-            background-color: rgba(45, 55, 72, var(--tw-bg-opacity));
-        }
-
-        .dark\:bg-gray-900 {
-            background-color: #1a202c;
-            background-color: rgba(26, 32, 44, var(--tw-bg-opacity));
-        }
-
-        .dark\:border-gray-700 {
-            border-color: #4a5568;
-            border-color: rgba(74, 85, 104, var(--tw-border-opacity));
-        }
-
-        .dark\:text-white {
-            color: #fff;
-            color: rgba(255, 255, 255, var(--tw-text-opacity));
-        }
-
-        .dark\:text-gray-400 {
-            color: #cbd5e0;
-            color: rgba(203, 213, 224, var(--tw-text-opacity));
-        }
-    }
-</style>
+  }
+};
+</script>
