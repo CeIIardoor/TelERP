@@ -16,16 +16,23 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Inertia::render('Welcome');
 });
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+Route::get('/organisations', function () {
+    return Inertia::render('Organisations');
+})->middleware(['auth'])->name('organisations');
+
+Route::get('/abonnements', function () {
+    return Inertia::render('Abonnements');
+})->middleware(['auth'])->name('abonnements');
+
+Route::get('/collaborateurs', function () {
+    return Inertia::render('Collaborateurs');
+})->middleware(['auth'])->name('collaborateurs');
 
 require __DIR__.'/auth.php';

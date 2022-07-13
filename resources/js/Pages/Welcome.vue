@@ -28,7 +28,7 @@
               <div class="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
                 <div class="flex items-center justify-between w-full md:w-auto">
                   <Link href="/">
-                    <HomeIcon class="h-8 w-8 mb-3 text-green-400" />
+                    <CubeTransparentIcon class="h-8 w-8 text-green-400" />
                   </Link>
                   <div class="-mr-2 flex items-center md:hidden">
                     <PopoverButton class="bg-gradient-to-b from-stone-100 to-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-lime-500">
@@ -77,7 +77,7 @@
                 <div class="px-5 pt-4 flex items-center justify-between">
                   <div>
                     <Link href="/">
-                        <HomeIcon class="h-8 w-8 text-green-400" />
+                        <HomeIcon class="h-8 w-8 mb-3 text-green-400" />
                     </Link>
                   </div>
                   <div class="-mr-2">
@@ -143,7 +143,7 @@
 
 <script>
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
-import { MenuIcon, XIcon, HomeIcon } from "@heroicons/vue/outline";
+import { MenuIcon, XIcon, HomeIcon, CubeTransparentIcon } from "@heroicons/vue/outline";
 const navigation = [
   { name: "A propos", href: "/apropos" },
   { name: "Tarifs", href: "/tarifs" },
@@ -156,7 +156,8 @@ export default {
     PopoverPanel,
     MenuIcon,
     XIcon,
-    HomeIcon
+    HomeIcon,
+    CubeTransparentIcon
   },
   setup() {
     return {
