@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\Abonnement;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,7 @@ Route::get('/organisations', function () {
 })->middleware(['auth'])->name('organisations');
 
 Route::get('/abonnements', function () {
-    return Inertia::render('Abonnements');
+    return Abonnement::all();
 })->middleware(['auth'])->name('abonnements');
 
 Route::get('/collaborateurs', function () {
