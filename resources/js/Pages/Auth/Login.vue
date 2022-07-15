@@ -8,12 +8,13 @@ import ValidationErrors from "@/Components/ValidationErrors.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 
 defineProps({
+  canResetPassword: Boolean,
   status: String,
 });
 
 const form = useForm({
-  email: "",
-  password: "",
+  email: "test@example.com",
+  password: "password",
   remember: false,
 });
 
@@ -45,7 +46,6 @@ const submit = () => {
           required
           autofocus
           autocomplete="username"
-          :value="test@example.com"
         />
       </div>
 
@@ -58,16 +58,15 @@ const submit = () => {
           v-model="form.password"
           required
           autocomplete="current-password"
-          :value="password"
         />
       </div>
 
-      <!-- <div class="block mt-4">
+      <div class="block mt-4">
         <label class="flex items-center">
           <Checkbox name="remember" v-model:checked="form.remember" />
           <span class="ml-2 text-sm text-gray-600">Se souvenir de moi</span>
         </label>
-      </div> -->
+      </div>
 
       <div class="flex items-center justify-end mt-4">
         <Button
