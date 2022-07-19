@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('types_abonnements', function (Blueprint $table) {
+        Schema::create('forfaits', function (Blueprint $table) {
             $table->increments('id');
             $table->string('intitule', 100);
-            $table->integer('pricing');
             $table->text('description');
+            $table->string('type', 50);
+            $table->enum('operateur',['IAM','ORANGE','INWI']);
+            $table->date('deleted_at')->default(Null);
+            $table->timestamps();
         });
     }
 
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('forfaits');
     }
 };
