@@ -35,24 +35,24 @@ const showingNavigationDropdown = ref(false);
               </div>
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <NavLink
-                  :href="route('abonnements')"
-                  :active="route().current('abonnements')"
+                  :href="route('abonnement')"
+                  :active="route().current('abonnement')"
                 >
                   Abonnements
                 </NavLink>
               </div>
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <NavLink
-                  :href="route('collaborateurs')"
-                  :active="route().current('collaborateurs')"
+                  :href="route('collaborateur')"
+                  :active="route().current('collaborateur')"
                 >
                   Collaborateurs
                 </NavLink>
               </div>
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <NavLink
-                  :href="route('organisations')"
-                  :active="route().current('organisations')"
+                  :href="route('organisation')"
+                  :active="route().current('organisation')"
                 >
                   Organisations
                 </NavLink>
@@ -150,20 +150,20 @@ const showingNavigationDropdown = ref(false);
               Dashboard
             </ResponsiveNavLink>
             <ResponsiveNavLink
-              :href="route('abonnements')"
-              :active="route().current('abonnements')"
+              :href="route('abonnement')"
+              :active="route().current('abonnement')"
             >
               Abonnements
             </ResponsiveNavLink>
             <ResponsiveNavLink
-              :href="route('collaborateurs')"
-              :active="route().current('collaborateurs')"
+              :href="route('collaborateur')"
+              :active="route().current('collaborateur')"
             >
               Collaborateurs
             </ResponsiveNavLink>
             <ResponsiveNavLink
-              :href="route('organisations')"
-              :active="route().current('organisations')"
+              :href="route('organisation')"
+              :active="route().current('organisation')"
             >
               Organisations
             </ResponsiveNavLink>

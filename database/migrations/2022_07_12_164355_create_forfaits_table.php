@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('type', 50);
             $table->enum('operateur',['IAM','ORANGE','INWI']);
-            $table->date('deleted_at')->default(Null);
+            $table->date('deleted_at')->nullable();
             $table->timestamps();
         });
     }

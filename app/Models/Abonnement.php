@@ -10,4 +10,9 @@ class Abonnement extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    public function forfait()
+    {
+        return $this->hasOne(Forfait::class);
+    }
 }

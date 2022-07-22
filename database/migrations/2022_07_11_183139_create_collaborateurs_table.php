@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('collaborateurs', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('n_client', 50);
             $table->string('nom', 50);
             $table->string('prenom', 50);
             $table->unsignedInteger('organisation_id');
@@ -23,9 +24,9 @@ return new class extends Migration
             $table->string('ville', 50)->nullable();
             $table->string('CIN', 20)->nullable();
             $table->string('dernier_grade', 100)->nullable();
-            $table->string('gestionnaire')->nullable();
-            $table->string('derniere_province')->nullable();
-            $table->date('deleted_at')->default(Null);
+            $table->string('gestionnaire', 100)->nullable();
+            $table->string('derniere_province', 100)->nullable();
+            $table->date('deleted_at')->nullable();
             $table->timestamps();
         });
     }

@@ -10,4 +10,9 @@ class Forfait extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    public function abonnements()
+    {
+        return $this->hasMany(Abonnement::class);
+    }
 }

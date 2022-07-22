@@ -25,6 +25,7 @@ class OrganisationFactory extends Factory
             'intitule' => $this->faker->word(5),
             'sigle' => strtoupper($this->faker->word),
             'ville' => $this->faker->city,
+            'n_client' => $this->faker->numerify('NCLI######'),
             'region' => $this->faker->region,
             'code postal' => $this->faker->numerify('#####'),
             'email' => $this->faker->safeEmail,

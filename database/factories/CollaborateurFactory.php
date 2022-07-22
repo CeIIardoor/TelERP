@@ -26,6 +26,7 @@ class CollaborateurFactory extends Factory
             'dernier_grade' => $this->faker->word,
             'gestionnaire' => $this->faker->firstName,
             'derniere_province' => $this->faker->city,
+            'n_client' => $this->faker->numerify('NCLI######'),
         ];
     }
 }
