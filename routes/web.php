@@ -33,35 +33,9 @@ Route::get('abonnement', function () {
     return Abonnement::all();
 })->middleware(['auth'])->name('abonnement');
 
-// Collaborateur
-
-Route::get('collaborateur', [CollaborateurController::class, 'index'])
-    ->name('collaborateur')
-    ->middleware('auth');
-
-Route::get('collaborateur/create', [CollaborateurController::class, 'create'])
-    ->name('collaborateur.create')
-    ->middleware('auth');
-
-Route::post('collaborateur', [CollaborateurController::class, 'store'])
-    ->name('collaborateur.store')
-    ->middleware('auth');
-
-Route::get('collaborateur/{contact}/edit', [CollaborateurController::class, 'edit'])
-    ->name('collaborateur.edit')
-    ->middleware('auth');
-
-Route::put('collaborateur/{contact}', [CollaborateurController::class, 'update'])
-    ->name('collaborateur.update')
-    ->middleware('auth');
-
-Route::delete('collaborateur/{contact}', [CollaborateurController::class, 'destroy'])
-    ->name('collaborateur.destroy')
-    ->middleware('auth');
-
-Route::put('collaborateur/{contact}/restore', [CollaborateurController::class, 'restore'])
-    ->name('collaborateur.restore')
-    ->middleware('auth');
+Route::get('collaborateur', function () {
+    return Inertia::render('Collaborateur/Index');
+})->middleware(['auth'])->name('collaborateur');
 
 
 require __DIR__.'/auth.php';

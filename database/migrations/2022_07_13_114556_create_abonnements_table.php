@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('abonnements', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('collaborateur_id');
-            $table->foreign('collaborateur_id')->references('id')->on('collaborateurs');
+            $table->foreign('collaborateur_id')->nullable()->references('id')->on('collaborateurs');
+            $table->unsignedInteger('organisation_id');
+            $table->foreign('organisation_id')->nullable()->references('id')->on('organisations');
             $table->string('numero_ligne', 25);
             $table->integer('mensualite');
             $table->unsignedInteger('forfait_id');

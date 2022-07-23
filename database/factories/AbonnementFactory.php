@@ -23,6 +23,7 @@ class AbonnementFactory extends Factory
     {
         return [
             'collaborateur_id' => rand(1,100),
+            'organisation_id' => rand(1,20),
             'numero_ligne' => $this->faker->numerify('06-##-##-##-##'),    
             'forfait_id' => rand(1,5),
             'periode_engagement' => $this->faker->randomElement([12,24,36,48,60]),
