@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\Collaborateur;
 use App\Models\Abonnement;
 use App\Http\Controllers\CollaborateurController;
 
@@ -34,7 +35,10 @@ Route::get('abonnement', function () {
 })->middleware(['auth'])->name('abonnement');
 
 Route::get('collaborateur', function () {
-    return Inertia::render('Collaborateur/Index');
+    $collaborateurs = Collaborateur::All();
+    return Inertia::render('Collaborateur/Index', [
+        'collaborateurs' => $collaborateurs
+    ]);
 })->middleware(['auth'])->name('collaborateur');
 
 
