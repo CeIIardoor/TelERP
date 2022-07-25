@@ -22,7 +22,7 @@ class OrganisationFactory extends Factory
     public function definition(): array
     {
         return [
-            'intitule' => $this->faker->word(5),
+            'intitule' => $this->faker->company,
             'sigle' => strtoupper($this->faker->word),
             'ville' => $this->faker->city,
             'n_client' => $this->faker->numerify('NCLI######'),

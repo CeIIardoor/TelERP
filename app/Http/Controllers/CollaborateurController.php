@@ -15,8 +15,33 @@ class CollaborateurController extends Controller
     public function index()
     {
         return Inertia::render('Collaborateur/Index', [
-            'filters' => Request::all('search', 'trashed'),
-            'collaborateurs' => Collaborateur::all()->take(10)
+            'collaborateurs' => Collaborateur::query()
+                ->when(Request::input('search'), function ($query, $search) {
+                    $query->where('n_client', 'like', "%{$search}%")
+                        ->orWhere('nom', 'like', "%{$search}%")
+                        ->orWhere('prenom', 'like', "%{$search}%")
+                        ->orWhere('ville', 'like', "%{$search}%")
+                        ->orWhere('CIN', 'like', "%{$search}%")
+                        ->orWhereHas('organisation', function ($query) use ($search) {
+                            $query->where('intitule', 'like', "%{$search}%")
+                            ->orWhere('sigle', 'like', "%{$search}%");
+                        });
+                })->with('organisation')
+                ->paginate(10)
+                ->withQueryString()
+                ->through(fn($collaborateur) => [
+                    'id' => $collaborateur->id,
+                    'n_client' => $collaborateur->n_client,
+                    'nom' => $collaborateur->nom,
+                    'prenom' => $collaborateur->prenom,
+                    'ville' => $collaborateur->ville,
+                    'CIN' => $collaborateur->CIN,
+                    'organisation' => [
+                        'id' => $collaborateur->organisation->id ?? null,
+                        'intitule' => $collaborateur->organisation->intitule ?? "Non affecté",
+                        'sigle' => $collaborateur->organisation->sigle ?? "",
+                    ],
+                ]),
         ]);
     }
 
