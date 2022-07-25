@@ -14,25 +14,15 @@ class CollaborateurController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Collaborateurs/Index', [
+        return Inertia::render('Collaborateur/Index', [
             'filters' => Request::all('search', 'trashed'),
-            'collaborateurs' => Collaborateur::with('organisation')
-                ->orderByName()
-                ->filter(Request::only('search', 'trashed'))
-                ->paginate(10)
-                ->withQueryString()
-                ->through(fn ($collaborateur) => [
-                    'id' => $collaborateur->id,
-                    'name' => $collaborateur->name,
-                    'deleted_at' => $collaborateur->deleted_at,
-                    'organisation' => $collaborateur->organisation ? $collaborateur->organisation->only('intitule') : null,
-                ]),
+            'collaborateurs' => Collaborateur::all()->take(10)
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Collaborateurs/Create');
+        return Inertia::render('Collaborateur/Create');
     }
 
     public function store()
@@ -57,7 +47,7 @@ class CollaborateurController extends Controller
 
     public function edit(Collaborateur $collaborateur)
     {
-        return Inertia::render('Collaborateurs/Edit', [
+        return Inertia::render('Collaborateur/Edit', [
             'collaborateur' => [
                 'id' => $collaborateur->id,
                 'prenom' => $collaborateur->prenom,

@@ -34,12 +34,7 @@ Route::get('abonnement', function () {
     return Abonnement::all();
 })->middleware(['auth'])->name('abonnement');
 
-Route::get('collaborateur', function () {
-    $collaborateurs = Collaborateur::All();
-    return Inertia::render('Collaborateur/Index', [
-        'collaborateurs' => $collaborateurs
-    ]);
-})->middleware(['auth'])->name('collaborateur');
+Route::get('collaborateur', [CollaborateurController::class, 'index'])->middleware(['auth'])->name('collaborateur');
 
 
 require __DIR__.'/auth.php';
