@@ -16,7 +16,7 @@ class CollaborateurController extends Controller
     {
         return Inertia::render('Collaborateur/Index', [
             'collaborateurs' => Collaborateur::query()
-                ->when(Request::input('search'), function ($query, $search) {
+            ->when(Request::input('search'), function ($query, $search) {
                     $query->where('n_client', 'like', "%{$search}%")
                         ->orWhere('nom', 'like', "%{$search}%")
                         ->orWhere('prenom', 'like', "%{$search}%")
@@ -42,7 +42,8 @@ class CollaborateurController extends Controller
                         'sigle' => $collaborateur->organisation->sigle ?? "",
                     ],
                 ]),
-        ]);
+            'filters' => Request::only('search'),
+            ]);
     }
 
     public function create()

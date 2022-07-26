@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('code postal', 50);
             $table->string('email', 50);
             $table->string('adresse', 100);
-            $table->date('deleted_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

@@ -3,13 +3,34 @@
   <AuthenticatedLayout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Liste des collaborateurs
+        Annuaire collaborateurs
       </h2>
     </template>
-    <div class="container m-2">
-    <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+    <div class="container pt-4 m-auto">
+    <div class="overflow-x-auto relative max-w-full shadow-lg sm:rounded-lg">
       <div class="flex justify-between items-center p-4 bg-white dark:bg-gray-800">
-        <div></div>
+        <div class="flex gap-2">
+          <Link
+            href="/collaborateur/create"
+            class="text-green-500 hover:text-green-700 text-sm ml-3"
+            >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </Link>
+        Ajouter un collaborateur
+        </div>
         <label for="table-search" class="sr-only">Search</label>
         <div class="relative">
           <div
@@ -43,8 +64,6 @@
           class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
         >
           <tr>
-            <th scope="col" class="p-4">
-            </th>
             <th scope="col" class="py-3 px-6">Nom Complet</th>
             <th scope="col" class="py-3 px-6">Ville</th>
             <th scope="col" class="py-3 px-6">Organisation</th>
@@ -57,8 +76,6 @@
             v-for="collaborateur in $page.props.collaborateurs.data" :key="collaborateur.id"
             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
           >
-            <td class="p-4 w-4">
-            </td>
             <th
               scope="row"
               class="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white"
@@ -99,6 +116,7 @@
           </tr>
         </tbody>
       </table>
+          <Pagination :links="collaborateurs.links" class="p-4 mx-auto text-gray-700 bg-white text-center" />
       <!-- Edit user modal -->
       <div
         v-if="!closed"
@@ -284,10 +302,24 @@
 
 <script setup>
 import AuthenticatedLayout from "@/Layouts/Authenticated.vue";
+import { ref, watch } from "vue";
+import { Inertia } from "@inertiajs/inertia";
+import debounce from "lodash/debounce";
+import Pagination from "@/Components/Pagination.vue";
+
+
+let props = defineProps({
+  collaborateurs: Object,
+  filters: Object,
+});
 
 let closed = $ref(true);
 
-let search = $ref("");
+let search = ref(props.filters.search);
+
+watch(search, debounce(function (value) {
+  Inertia.get("/collaborateur", { search: value }, { preserveState: true, replace: true });
+}, 300));
 
 
 function toggleModal() {

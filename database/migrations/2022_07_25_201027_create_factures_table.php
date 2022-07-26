@@ -37,7 +37,7 @@ return new class extends Migration
             $table->string('intrus', 100)->nullable();
             $table->string('justif', 100)->nullable();
             $table->string('CMOTIF_RS', 100)->default('Actif');
-            $table->date('deleted_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

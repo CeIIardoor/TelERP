@@ -27,7 +27,8 @@ return new class extends Migration
             $table->date('date_cloture')->nullable();
             $table->text('commentaire')->nullable();
             $table->string('num_contrat_operateur')->nullable();
-            $table->date('deleted_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
+
             $table->timestamps();
         });
     }

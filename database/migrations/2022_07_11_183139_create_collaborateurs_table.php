@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('dernier_grade', 100)->nullable();
             $table->string('gestionnaire', 100)->nullable();
             $table->string('derniere_province', 100)->nullable();
-            $table->date('deleted_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }
