@@ -12,7 +12,6 @@
         <!-- Scripts -->
         @routes
         @vite('resources/js/app.js')
-        @vite('node_modules/flowbite/dist/flowbite.js')
         @inertiaHead
     </head>
     <body class="font-sans antialiased">
