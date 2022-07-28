@@ -35,18 +35,18 @@ const showingNavigationDropdown = ref(false);
               </div>
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <NavLink
-                  :href="route('abonnement')"
-                  :active="route().current('abonnement')"
-                >
-                  Abonnements
-                </NavLink>
-              </div>
-              <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                <NavLink
                   :href="route('collaborateur')"
                   :active="route().current('collaborateur')"
                 >
                   Collaborateurs
+                </NavLink>
+              </div>
+              <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <NavLink
+                  :href="route('abonnement')"
+                  :active="route().current('abonnement')"
+                >
+                  Abonnements
                 </NavLink>
               </div>
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -150,16 +150,16 @@ const showingNavigationDropdown = ref(false);
               Dashboard
             </ResponsiveNavLink>
             <ResponsiveNavLink
-              :href="route('abonnement')"
-              :active="route().current('abonnement')"
-            >
-              Abonnements
-            </ResponsiveNavLink>
-            <ResponsiveNavLink
               :href="route('collaborateur')"
               :active="route().current('collaborateur')"
             >
               Collaborateurs
+            </ResponsiveNavLink>
+            <ResponsiveNavLink
+              :href="route('abonnement')"
+              :active="route().current('abonnement')"
+            >
+              Abonnements
             </ResponsiveNavLink>
             <ResponsiveNavLink
               :href="route('organisation')"
