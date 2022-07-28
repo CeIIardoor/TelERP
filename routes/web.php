@@ -27,7 +27,7 @@ Route::get('dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('organisation', function () {
-    return 'organisation';
+    return Organisation::all();
 })->middleware(['auth'])->name('organisation');
 
 Route::get('abonnement', function () {
@@ -35,6 +35,11 @@ Route::get('abonnement', function () {
 })->middleware(['auth'])->name('abonnement');
 
 Route::get('collaborateur', [CollaborateurController::class, 'index'])->middleware(['auth'])->name('collaborateur');
+Route::get('collaborateur/create', [CollaborateurController::class, 'create'])->middleware(['auth'])->name('collaborateur.create');
+Route::post('collaborateur/{collaborateur:id}', [CollaborateurController::class, 'update'])->middleware(['auth'])->name('collaborateur.edit');
+Route::get('collaborateur/{collaborateur:id}/delete', [CollaborateurController::class, 'delete'])->middleware(['auth'])->name('collaborateur.delete');
+Route::get('collaborateur/corbeille', [CollaborateurController::class, 'corbeille'])->middleware(['auth'])->name('collaborateur.corbeille');
+Route::get('collaborateur/{collaborateur:id}/destroy', [CollaborateurController::class, 'destroy'])->middleware(['auth'])->name('collaborateur.destroy');
 
 
 require __DIR__.'/auth.php';

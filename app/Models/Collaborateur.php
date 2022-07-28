@@ -11,46 +11,26 @@ class Collaborateur extends Model
     use HasFactory;
     use SoftDeletes;
 
-    
-    public function resolveRouteBinding($value, $field = null)
-    {
-        return $this->where($field ?? 'id', $value)->withTrashed()->firstOrFail();
-    }
+    protected $fillable = [
+        'n_client',
+        'nom',
+        'prenom',
+        'ville',
+        'CIN',
+        'derniere_affectation',
+        'dernier_grade',
+        'gestionnaire',
+        'derniere_province',
+        'organisation_id',
+    ];
 
     public function organisation()
     {
         return $this->belongsTo(Organisation::class);
     }
 
-    public function getNameAttribute()
-    {
-        return $this->prenom.' '.$this->nom;
-    }
-
     public function scopeOrderByName($query)
     {
         $query->orderBy('nom')->orderBy('prenom');
-    }
-
-    public function scopeFilter($query, array $filters)
-    {
-        $query->when($filters['search'] ?? null, function ($query, $search) {
-            $query->where(function ($query) use ($search) {
-                $query->where('prenom', 'like', '%'.$search.'%')
-                    ->orWhere('nom', 'like', '%'.$search.'%')
-                    ->orWhere('CIN', 'like', '%'.$search.'%')
-                    ->orWhere('ville', 'like', '%'.$search.'%')
-                    ->orWhereHas('organisation', function ($query) use ($search) {
-                        $query->where('intitule', 'like', '%'.$search.'%')
-                        ->orWhere('sigle', 'like', '%'.$search.'%');
-                    });
-            });
-        })->when($filters['trashed'] ?? null, function ($query, $trashed) {
-            if ($trashed === 'with') {
-                $query->withTrashed();
-            } elseif ($trashed === 'only') {
-                $query->onlyTrashed();
-            }
-        });
     }
 }

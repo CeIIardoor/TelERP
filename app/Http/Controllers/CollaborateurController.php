@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Collaborateur;
 use App\Models\Organisation;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Request;
+use Auth;
+use Redirect;
+use Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
@@ -36,13 +36,18 @@ class CollaborateurController extends Controller
                     'prenom' => $collaborateur->prenom,
                     'ville' => $collaborateur->ville,
                     'CIN' => $collaborateur->CIN,
+                    'derniere_affectation' => $collaborateur->derniere_affectation,
+                    'dernier_grade' => $collaborateur->dernier_grade,
+                    'gestionnaire' => $collaborateur->gestionnaire,
+                    'derniere_province' => $collaborateur->derniere_province,
                     'organisation' => [
-                        'id' => $collaborateur->organisation->id ?? null,
+                        'id' => $collaborateur->organisation->id ?? 0,
                         'intitule' => $collaborateur->organisation->intitule ?? "Non affecté",
-                        'sigle' => $collaborateur->organisation->sigle ?? "",
+                        'sigle' => $collaborateur->organisation->sigle ?? "NULL",
                     ],
                 ]),
             'filters' => Request::only('search'),
+            'orgs' => Organisation::all(),
             ]);
     }
 
@@ -71,55 +76,34 @@ class CollaborateurController extends Controller
         return Redirect::route('collaborateurs')->with('success', 'Collaborateur créé.');
     }
 
-    public function edit(Collaborateur $collaborateur)
-    {
-        return Inertia::render('Collaborateur/Edit', [
-            'collaborateur' => [
-                'id' => $collaborateur->id,
-                'prenom' => $collaborateur->prenom,
-                'nom' => $collaborateur->nom,
-                'organisation_id' => $collaborateur->organisation_id,
-                'derniere_affectation' => $collaborateur->derniere_affectation,
-                'ville' => $collaborateur->ville,
-                'CIN' => $collaborateur->CIN,
-                'dernier_grade' => $collaborateur->dernier_grade,
-                'gestionnaire' => $collaborateur->gestionnaire,
-                'deleted_at' => $collaborateur->deleted_at,
-            ],
-            'organisations' => Organisation::where('collaborateur_id', $collaborateur->id)->get()
-                ->orderBy('intitule')
-                ->get()
-                ->map
-                ->only('id', 'intitule'),
-        ]);
-    }
-
     public function update(Collaborateur $collaborateur)
     {
-        $collaborateur->update(
-            Request::validate([
-                'nom' => ['required', 'max:50'],
-                'prenom' => ['required', 'max:50'],
-                'organisation_id' => [
-                    'nullable',
-                    Rule::exists('organisations', 'id'),
-                ],
-                'derniere_affectation' => ['nullable', 'max:100'],
-                'ville' => ['nullable', 'max:50'],
-                'CIN' => ['nullable', 'max:20'],
-                'dernier_grade' => ['nullable', 'max:100'],
-                'gestionnaire' => ['nullable', 'max:100'],
-            ])
-        );
+        $attributes = Request::validate([
+            'n_client' => ['required', 'max:50'],
+            'nom' => ['required', 'max:50'],
+            'prenom' => ['required', 'max:50'],
+            'organisation_id' => [
+                'nullable',
+                Rule::exists('organisations', 'id'),
+            ],
+            'derniere_affectation' => ['nullable', 'max:100'],
+            'ville' => ['nullable', 'max:50'],
+            'CIN' => ['nullable', 'max:20'],
+            'dernier_grade' => ['nullable', 'max:100'],
+            'gestionnaire' => ['nullable', 'max:100'],
+            'derniere_province' => ['nullable', 'max:100'],
+        ]);
+
+        $collaborateur->update($attributes);
 
         return Redirect::back()->with('success', 'Collaborateur mis à jour.');
     }
 
-    public function destroy(Collaborateur $collaborateur)
+    public function delete(Collaborateur $collaborateur)
     {
         $collaborateur->delete();
 
-        return Redirect::back()->with('success', 'Collaborateur supprimé.');
+        return Redirect::back()->with('error', 'Collaborateur supprimé.');
     }
 
     public function restore(Collaborateur $collaborateur)
@@ -127,5 +111,12 @@ class CollaborateurController extends Controller
         $collaborateur->restore();
 
         return Redirect::back()->with('success', 'Collaborateur restauré.');
+    }
+
+    public function destroy(Collaborateur $collaborateur)
+    {
+        $collaborateur->destroy();
+        
+        return Redirect::back()->with('success', 'Collaborateur supprimé de la corbeille.');
     }
 }
