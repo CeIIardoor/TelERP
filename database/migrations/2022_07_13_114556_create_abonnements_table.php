@@ -15,8 +15,6 @@ return new class extends Migration
     {
         Schema::create('abonnements', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('collaborateur_id');
-            $table->foreign('collaborateur_id')->nullable()->references('id')->on('collaborateurs');
             $table->string('numero_ligne', 25);
             $table->integer('mensualite');
             $table->unsignedInteger('forfait_id');
@@ -27,6 +25,17 @@ return new class extends Migration
             $table->date('date_cloture')->nullable();
             $table->text('commentaire')->nullable();
             $table->string('num_contrat_operateur')->nullable();
+            $table->string('n_client', 50);
+            $table->string('nom', 50);
+            $table->string('prenom', 50);
+            $table->unsignedInteger('organisation_id');
+            $table->foreign('organisation_id')->references('id')->on('organisations');
+            $table->string('derniere_affectation', 100)->nullable();
+            $table->string('ville', 50)->nullable();
+            $table->string('CIN', 20)->nullable();
+            $table->string('dernier_grade', 100)->nullable();
+            $table->string('gestionnaire', 100)->nullable();
+            $table->string('derniere_province', 100)->nullable();
             $table->timestamp('deleted_at')->nullable();
 
             $table->timestamps();

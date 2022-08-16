@@ -26,7 +26,7 @@ class FactureFactory extends Factory
             'date' => $this->faker->date(),
             'montant_supplementaire' => 0,
             'echeance' => $this->faker->date(),
-            'statut' => $this->faker->randomElement(['Payée','Non payée']),
+            'statut' => $this->faker->randomElement(['Payée','En attente','Non payée']),
             'F_OHXACT' => $this->faker->numerify('F_OHXACT_######'),
             'F_CUSTCODE' => $this->faker->numerify('F_CUSTCODE_######'),
             'CUSTCODE' => $this->faker->numerify('CUSTCODE_######'),

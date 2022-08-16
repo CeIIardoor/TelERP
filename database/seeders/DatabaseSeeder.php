@@ -29,7 +29,6 @@ class DatabaseSeeder extends Seeder
         ]);
         \App\Models\User::factory(10)->create();
         \App\Models\Organisation::factory(20)->create();
-        \App\Models\Collaborateur::factory(100)->create();
         \App\Models\Forfait::factory(5)->create();
         \App\Models\Abonnement::factory(50)->create();
         \App\Models\Facture::factory(50)->create();

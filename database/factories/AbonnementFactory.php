@@ -22,8 +22,7 @@ class AbonnementFactory extends Factory
     public function definition(): array
     {
         return [
-            'collaborateur_id' => rand(1,100),
-            'numero_ligne' => $this->faker->numerify('06-##-##-##-##'),    
+            'numero_ligne' => $this->faker->numerify('06-##-##-##-##'),
             'forfait_id' => rand(1,5),
             'periode_engagement' => $this->faker->randomElement([12,24,36,48,60]),
             'mensualite' => $this->faker->randomElement([100, 150, 200, 250, 300, 500]),
@@ -32,6 +31,16 @@ class AbonnementFactory extends Factory
             'date_cloture' => $this->faker->date(),
             'commentaire' => $this->faker->text,
             'num_contrat_operateur' => $this->faker->numerify('N_#######'),
+            'nom' => $this->faker->firstName,
+            'prenom' => $this->faker->lastName,
+            'derniere_affectation' => $this->faker->word,
+            'ville' => $this->faker->city,
+            'organisation_id' => rand(1,20),
+            'CIN' => $this->faker->numerify('CIN######'),
+            'dernier_grade' => $this->faker->word,
+            'gestionnaire' => $this->faker->firstName,
+            'derniere_province' => $this->faker->city,
+            'n_client' => $this->faker->numerify('NCLI######'),
         ];
     }
 }

@@ -13,7 +13,7 @@ defineProps({
 });
 
 const form = useForm({
-  email: "gestionnaire@example.com",
+  email: "admin@example.com",
   password: "password",
   remember: false,
 });
@@ -60,11 +60,10 @@ const submit = () => {
           autocomplete="current-password"
         />
       </div>
-
       <div class="block mt-4">
         <label class="flex items-center">
           <Checkbox name="remember" v-model:checked="form.remember" />
-          <span class="ml-2 text-sm text-gray-600">Se souvenir de moi</span>
+            <span class="ml-2 text-sm text-gray-600">Se souvenir de moi</span>
         </label>
       </div>
 

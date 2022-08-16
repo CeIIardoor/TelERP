@@ -35,14 +35,6 @@ const showingNavigationDropdown = ref(false);
               </div>
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <NavLink
-                  :href="route('collaborateur')"
-                  :active="route().current('collaborateur')"
-                >
-                  Collaborateurs
-                </NavLink>
-              </div>
-              <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                <NavLink
                   :href="route('abonnement')"
                   :active="route().current('abonnement')"
                 >
@@ -57,7 +49,16 @@ const showingNavigationDropdown = ref(false);
                   Organisations
                 </NavLink>
               </div>
+              <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <NavLink
+                  :href="route('facture')"
+                  :active="route().current('facture')"
+                >
+                  Factures
+                </NavLink>
+              </div>
             </div>
+
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
               <!-- Settings Dropdown -->
@@ -150,12 +151,6 @@ const showingNavigationDropdown = ref(false);
               Dashboard
             </ResponsiveNavLink>
             <ResponsiveNavLink
-              :href="route('collaborateur')"
-              :active="route().current('collaborateur')"
-            >
-              Collaborateurs
-            </ResponsiveNavLink>
-            <ResponsiveNavLink
               :href="route('abonnement')"
               :active="route().current('abonnement')"
             >
@@ -166,6 +161,12 @@ const showingNavigationDropdown = ref(false);
               :active="route().current('organisation')"
             >
               Organisations
+            </ResponsiveNavLink>
+            <ResponsiveNavLink
+              :href="route('facture')"
+              :active="route().current('facture')"
+            >
+              Factures
             </ResponsiveNavLink>
           </div>
 

@@ -1,17 +1,17 @@
 <template>
-  <Head title="Collaborateur" />
+  <Head title="Abonnement" />
   <AuthenticatedLayout>
     <template #header>
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Ajouter un collaborateur
+                Ajouter un abonnement
             </h2>
         </div>
     </template>
     <div class="container pt-4 m-auto">
         <div class="overflow-x-auto relative min-w-full shadow-lg sm:rounded-lg">
             <div class="flex justify-between items-center p-4 bg-white dark:bg-gray-800">
-                 <form id="collaborateur_form" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                 <form id="abonnement_form" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
 
             <div class="p-6 space-y-6">
               <div class="grid grid-cols-12 gap-12">
@@ -185,7 +185,7 @@
             >
               <button
                 type="submit"
-                @click.prevent="create_collaborateur()"
+                @click.prevent="create_abonnement()"
                 class="text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
               >
                 Créer
@@ -208,15 +208,15 @@ const props = defineProps({
   orgs: Object,
 });
 
-function create_collaborateur() {
-    let form = document.getElementById("collaborateur_form");
+function create_abonnement() {
+    let form = document.getElementById("abonnement_form");
     let formData = new FormData(form);
     let data = {};
     for (let entry of formData.entries()) {
         data[entry[0]] = entry[1];
     }
-    Inertia.post("/collaborateur/store", data, { preserveState: true, replace: true, onSuccess: () => {
-        flash('Bienvenue a bord!', 'Collaborateur créé avec succès', 'success');
+    Inertia.post("/abonnement/store", data, { preserveState: true, replace: true, onSuccess: () => {
+        flash('Bienvenue a bord!', 'Abonnement créé avec succès', 'success');
     }});
 }
 
