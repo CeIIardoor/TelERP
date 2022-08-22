@@ -1,17 +1,17 @@
 <template>
-  <Head title="Abonnement" />
+  <Head title="Organisation" />
   <AuthenticatedLayout>
     <template #header>
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Ajouter un abonnement
+                Ajouter un organisation
             </h2>
         </div>
     </template>
     <div class="container pt-4 m-auto">
         <div class="overflow-x-auto relative min-w-full shadow-lg sm:rounded-lg">
             <div class="flex justify-between items-center p-4 bg-white dark:bg-gray-800">
-                 <form id="abonnement_form" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                 <form id="organisation_form" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
 
             <div class="p-6 space-y-6">
               <div class="grid grid-cols-12 gap-12">
@@ -185,7 +185,7 @@
             >
               <button
                 type="submit"
-                @click.prevent="create_abonnement()"
+                @click.prevent="create_organisation()"
                 class="text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
               >
                 Créer
@@ -208,15 +208,15 @@ const props = defineProps({
   orgs: Object,
 });
 
-function create_abonnement() {
-    let form = document.getElementById("abonnement_form");
+function create_organisation() {
+    let form = document.getElementById("organisation_form");
     let formData = new FormData(form);
     let data = {};
     for (let entry of formData.entries()) {
         data[entry[0]] = entry[1];
     }
-    Inertia.post("/abonnement/store", data, { preserveState: true, replace: true, onSuccess: () => {
-        flash('Parfait !', 'Abonnement créé avec succès', 'success');
+    Inertia.post("/organisation/store", data, { preserveState: true, replace: true, onSuccess: () => {
+        flash('Parfait !', 'Organisation créé avec succès', 'success');
     }});
 }
 

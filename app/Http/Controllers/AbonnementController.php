@@ -156,7 +156,7 @@ class AbonnementController extends Controller
         if(Auth::user()->role != 'admin') {
             return Redirect::to('/abonnement')->with('error', 'Vous n\'avez pas les droits pour restaurer un abonnement.');
         }
-        Abonnement::withTrashed()->findOrFail($id)->restore();
+        Abonnement::onlyTrashed()->findOrFail($id)->restore();
 
         return Redirect::back()->with('success', 'Abonnement restauré.');
     }
@@ -167,7 +167,7 @@ class AbonnementController extends Controller
             return Redirect::to('/abonnement')->with('error', 'Vous n\'avez pas les droits pour supprimer définitivement un abonnement.');
         }
 
-        Abonnement::withTrashed()->findOrFail($id)->forceDelete();
+        Abonnement::onlyTrashed()->findOrFail($id)->forceDelete();
 
         return Redirect::back()->with('success', 'Abonnement supprimé.');
     }

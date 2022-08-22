@@ -1,41 +1,17 @@
 <template>
-  <Head title="Abonnement" />
+  <Head title="Organisation" />
   <AuthenticatedLayout>
     <template #header>
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Annuaire abonnements
+                Corbeille organisations
             </h2>
-            <Link v-if="$attrs.auth.user.role == 'Administrateur'" :href="route('corbeille.abonnement')" class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                <h4>Corbeille</h4>
-            </Link>
         </div>
     </template>
     <div class="container pt-4 m-auto">
     <div class="overflow-x-auto relative max-w-full shadow-lg sm:rounded-lg">
       <div class="flex justify-between items-center p-4 bg-white dark:bg-gray-800">
-        <div class="flex gap-2">
-          <Link
-            href="/abonnement/create"
-            class="text-green-500 hover:text-green-700 text-sm ml-3"
-            >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-        </Link>
-        Ajouter un abonnement
-        </div>
+
         <label for="table-search" class="sr-only">Search</label>
         <div class="relative">
           <div
@@ -78,7 +54,7 @@
         </thead>
         <tbody>
           <tr
-            v-for="abonnement in $page.props.abonnements.data" :key="abonnement.id"
+            v-for="organisation in $page.props.organisations.data" :key="organisation.id"
             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
           >
             <th
@@ -86,61 +62,64 @@
               class="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white"
             >
               <div class="pl-3">
-                <div class="text-base font-semibold">{{abonnement.nom}} {{abonnement.prenom}}</div>
-                <div class="font-normal text-gray-500">{{abonnement.CIN}}</div>
+                <div class="text-base font-semibold">{{organisation.nom}} {{organisation.prenom}}</div>
+                <div class="font-normal text-gray-500">{{organisation.CIN}}</div>
               </div>
             </th>
             <td class="py-4 px-6">
               <div class="flex items-center">
-                {{abonnement.ville}}
+                {{organisation.ville}}
               </div>
             </td>
             <td class="py-4 px-6">
-              <div class="text-base font-semibold">{{abonnement.organisation.intitule}}</div>
-                <div class="font-normal text-gray-500">{{abonnement.organisation.sigle}}</div>
+              <div class="text-base font-semibold">{{organisation.organisation.intitule}}</div>
+                <div class="font-normal text-gray-500">{{organisation.organisation.sigle}}</div>
             </td>
             <td class="py-4 px-6">
               <div class="flex items-center">
-                {{abonnement.n_client}}
+                {{organisation.n_client}}
               </div>
             </td>
             <td class="md:flex h-4 w-4">
-                <Link
-                    :href="`/abonnement/${abonnement.id}/factures`"
-                    class="text-green-600 hover:text-green-900"
-                >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                </Link>
               <!-- Modal toggle -->
-              <a
-                href="#"
+              <button
                 type="button"
-                @click="openModal(abonnement)"
-                data-modal-toggle="editUserModal"
+                @click="openModal(organisation)"
+                data-modal-toggle="viewUserModal"
                 class="font-medium text-emerald-600 dark:text-emerald-500 hover:underline"
                 >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+  <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
-                </a>
-                <!-- Delete record -->
+                </button>
+                <Link
+                    :href="'/corbeille/organisation/' + organisation.id + '/restore'"
+                    class="text-blue-600 hover:text-blue-900"
+                >
+               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                </Link>
+
+                <!-- destroy record -->
                <Link
-                    :href="`/abonnement/${abonnement.id}/delete`"
+                    :href="'/corbeille/organisation/'+ organisation.id +'/destroy'"
                     class="text-red-600 hover:text-red-900"
                 >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
                 </Link>
             </td>
           </tr>
         </tbody>
       </table>
-          <Pagination :links="abonnements.links" class="p-4 mx-auto text-gray-700 bg-white text-center" />
-      <!-- Edit user modal -->
+          <Pagination :links="organisations.links" class="p-4 mx-auto text-gray-700 bg-white text-center" />
+      <!-- View user modal -->
       <div
         v-if="!closed"
-        id="editUserModal"
+        id="viewUserModal"
         tabindex="-1"
         class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center p-4 w-full md:inset-0 h-modal md:h-full flex"
         aria-modal="true"
@@ -148,19 +127,19 @@
       >
         <div class="relative w-full max-w-2xl h-full md:h-auto">
           <!-- Modal content -->
-          <form id="abonnement_form" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <form id="organisation_form" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->
             <div
               class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600"
             >
               <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                Éditer
+                Détails
               </h3>
               <button
                 type="button"
                 @click="closeModal()"
                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                data-modal-toggle="editUserModal"
+                data-modal-toggle="viewUserModal"
               >
                 <svg
                   class="w-5 h-5"
@@ -185,7 +164,7 @@
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Prenom</label
                   >
-                  <input
+                  <input readonly
                     id="prenom"
                     type="text"
                     name="prenom"
@@ -201,7 +180,7 @@
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Nom</label
                   >
-                  <input
+                  <input readonly
                     type="text"
                     name="nom"
                     id="nom"
@@ -217,7 +196,7 @@
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >N° client</label
                   >
-                  <input
+                  <input readonly
                     type="text"
                     name="n_client"
                     id="n_client"
@@ -233,7 +212,7 @@
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >CIN</label
                   >
-                  <input
+                  <input readonly
                     type="text"
                     name="CIN"
                     id="CIN"
@@ -249,7 +228,7 @@
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Ville</label
                   >
-                  <input
+                  <input readonly
                     type="text"
                     name="ville"
                     id="Ville"
@@ -265,7 +244,7 @@
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Derniere affectation</label
                   >
-                  <input
+                  <input readonly
                     type="text"
                     name="derniere_affectation"
                     id="derniere_affectation"
@@ -280,7 +259,7 @@
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Dernier Grade</label
                   >
-                  <input
+                  <input readonly
                     type="text"
                     name="dernier_grade"
                     id="dernier_grade"
@@ -295,7 +274,7 @@
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Gestionnaire</label
                   >
-                  <input
+                  <input readonly
                     type="text"
                     name="gestionnaire"
                     id="gestionnaire"
@@ -310,7 +289,7 @@
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Derniere_province</label
                   >
-                  <input
+                  <input readonly
                     type="text"
                     name="derniere_province"
                     id="derniere_province"
@@ -319,44 +298,22 @@
                     :value="modal_data.derniere_province"
                   />
                 </div>
-            <div class="col-span-6 sm:col-span-9">
+                <div class="col-span-6 sm:col-span-9">
                   <label
                     for="organisation_id"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Organisation</label
                   >
-                  <select
-                    name="organisation_id"
-                    id="organisation_id"
+                  <input readonly
+                    type="text"
+                    name="gestionnaire"
+                    id="gestionnaire"
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-emerald-600 focus:border-emerald-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"
-                    placeholder="Organisation"
-                    required=""
-                  >
-                    <option disabled>Choisir une organisation</option>
-                    <option
-                    v-for="org in orgs"
-                    :key="org.id"
-                    :selected="org.id === modal_data.organisation.id"
-                    :value=org.id
-                    >
-                    {{ org.intitule }}
-                    </option>
-                    </select>
+                    placeholder="Gestionnaire"
+                    :value="modal_data.organisation.intitule"
+                  />
                 </div>
               </div>
-            </div>
-
-            <!-- Modal footer -->
-            <div
-              class="flex items-center flex-row-reverse p-6 space-x-1 rounded-b border-t border-gray-200 dark:border-gray-600"
-            >
-              <button
-                type="submit"
-                @click.prevent="update_abonnement(modal_data.id)"
-                class="text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
-              >
-                Mettre à jour
-              </button>
             </div>
           </form>
         </div>
@@ -397,9 +354,8 @@ import debounce from "lodash/debounce";
 import Pagination from "@/Components/Pagination.vue";
 
 const props = defineProps({
-  abonnements: Object,
-  filters: Object,
-  orgs: Object,
+  organisations: Object,
+  filters: Object
 });
 
 let closed = ref(true);
@@ -419,9 +375,9 @@ const vHideToast = {
   }
 }
 
-function openModal(abonnement) {
+function openModal(organisation) {
 closed.value = false;
-modal_data.value = abonnement;
+modal_data.value = organisation;
 }
 
 function closeModal() {
@@ -430,18 +386,7 @@ modal_data.value = null;
 }
 
 watch(search, debounce(function (value) {
-  Inertia.get("/abonnement", { search: value }, { preserveState: true, replace: true });
+    Inertia.get("/corbeille/organisation/", { search: value }, { preserveState: true, replace: true });
 }, 300));
 
-function update_abonnement(id) {
-    let form = document.getElementById("abonnement_form");
-    let formData = new FormData(form);
-    let data = {};
-    for (let entry of formData.entries()) {
-        data[entry[0]] = entry[1];
-    }
-    Inertia.post("/abonnement/"+id, data, { preserveState: true, replace: true });
-    closed.value = true;
-    toasted.value = true;
-}
 </script>

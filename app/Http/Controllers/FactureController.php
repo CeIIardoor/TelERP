@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\facture;
-use Illuminate\Http\Request;
+
+use App\Models\Abonnement;
+use App\Models\Organisation;
+use Auth;
+use Redirect;
+use Request;
+use Illuminate\Validation\Rule;
+use Inertia\Inertia;
 
 class FactureController extends Controller
 {
@@ -12,74 +18,43 @@ class FactureController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index($id){
+        $abonnement = Abonnement::findOrFail($id);
+        return Inertia::render('Factures/Index', [
+            'abonnement' => [
+                'id' => $abonnement->id,
+                'n_client' => $abonnement->n_client,
+                'nom' => $abonnement->nom,
+                'prenom' => $abonnement->prenom,
+                'mensualite' => $abonnement->mensualite,
+                'ville' => $abonnement->ville,
+                'CIN' => $abonnement->CIN,
+                'derniere_affectation' => $abonnement->derniere_affectation,
+                'dernier_grade' => $abonnement->dernier_grade,
+                'gestionnaire' => $abonnement->gestionnaire,
+                'derniere_province' => $abonnement->derniere_province,
+                'organisation' => [
+                    'id' => $abonnement->organisation->id ?? 0,
+                    'intitule' => $abonnement->organisation->intitule ?? "Non affecté",
+                    'sigle' => $abonnement->organisation->sigle ?? "Ø",
+                ],
+            ],
+            'factures' => $abonnement->factures()
+                    ->latest()
+                    ->paginate(10)
+                    ->withQueryString()
+                    ->through(fn($facture) => [
+                        'id' => $facture->id,
+                        'date' => $facture->date,
+                        'montant_supplementaire' => $facture->montant_supplementaire,
+                        'statut' => $facture->statut,
+                    ]),
+            ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\facture  $facture
-     * @return \Illuminate\Http\Response
-     */
-    public function show(facture $facture)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\facture  $facture
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(facture $facture)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\facture  $facture
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, facture $facture)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\facture  $facture
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(facture $facture)
     {
-        //
+        $facture->delete();
+        return Redirect::route('facture.index', $facture->abonnement_id)->with('success', 'Facture supprimée avec succès.');
     }
 }

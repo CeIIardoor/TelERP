@@ -1,12 +1,12 @@
 <template>
-  <Head title="Abonnement" />
+  <Head title="Organisation" />
   <AuthenticatedLayout>
     <template #header>
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Annuaire abonnements
+                Annuaire organisations
             </h2>
-            <Link v-if="$attrs.auth.user.role == 'Administrateur'" :href="route('corbeille.abonnement')" class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+            <Link v-if="$attrs.auth.user.role == 'Administrateur'" :href="route('corbeille.organisation')" class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                 <h4>Corbeille</h4>
             </Link>
         </div>
@@ -16,7 +16,7 @@
       <div class="flex justify-between items-center p-4 bg-white dark:bg-gray-800">
         <div class="flex gap-2">
           <Link
-            href="/abonnement/create"
+            href="/organisation/create"
             class="text-green-500 hover:text-green-700 text-sm ml-3"
             >
           <svg
@@ -34,7 +34,7 @@
             />
           </svg>
         </Link>
-        Ajouter un abonnement
+        Ajouter un organisation
         </div>
         <label for="table-search" class="sr-only">Search</label>
         <div class="relative">
@@ -78,7 +78,7 @@
         </thead>
         <tbody>
           <tr
-            v-for="abonnement in $page.props.abonnements.data" :key="abonnement.id"
+            v-for="organisation in $page.props.organisations.data" :key="organisation.id"
             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
           >
             <th
@@ -86,38 +86,30 @@
               class="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white"
             >
               <div class="pl-3">
-                <div class="text-base font-semibold">{{abonnement.nom}} {{abonnement.prenom}}</div>
-                <div class="font-normal text-gray-500">{{abonnement.CIN}}</div>
+                <div class="text-base font-semibold">{{organisation.nom}} {{organisation.prenom}}</div>
+                <div class="font-normal text-gray-500">{{organisation.CIN}}</div>
               </div>
             </th>
             <td class="py-4 px-6">
               <div class="flex items-center">
-                {{abonnement.ville}}
+                {{organisation.ville}}
               </div>
             </td>
             <td class="py-4 px-6">
-              <div class="text-base font-semibold">{{abonnement.organisation.intitule}}</div>
-                <div class="font-normal text-gray-500">{{abonnement.organisation.sigle}}</div>
+              <div class="text-base font-semibold">{{organisation.organisation.intitule}}</div>
+                <div class="font-normal text-gray-500">{{organisation.organisation.sigle}}</div>
             </td>
             <td class="py-4 px-6">
               <div class="flex items-center">
-                {{abonnement.n_client}}
+                {{organisation.n_client}}
               </div>
             </td>
             <td class="md:flex h-4 w-4">
-                <Link
-                    :href="`/abonnement/${abonnement.id}/factures`"
-                    class="text-green-600 hover:text-green-900"
-                >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                </Link>
               <!-- Modal toggle -->
               <a
                 href="#"
                 type="button"
-                @click="openModal(abonnement)"
+                @click="openModal(organisation)"
                 data-modal-toggle="editUserModal"
                 class="font-medium text-emerald-600 dark:text-emerald-500 hover:underline"
                 >
@@ -127,7 +119,7 @@
                 </a>
                 <!-- Delete record -->
                <Link
-                    :href="`/abonnement/${abonnement.id}/delete`"
+                    :href="`/organisation/${organisation.id}/delete`"
                     class="text-red-600 hover:text-red-900"
                 >
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
@@ -136,7 +128,7 @@
           </tr>
         </tbody>
       </table>
-          <Pagination :links="abonnements.links" class="p-4 mx-auto text-gray-700 bg-white text-center" />
+          <Pagination :links="organisations.links" class="p-4 mx-auto text-gray-700 bg-white text-center" />
       <!-- Edit user modal -->
       <div
         v-if="!closed"
@@ -148,7 +140,7 @@
       >
         <div class="relative w-full max-w-2xl h-full md:h-auto">
           <!-- Modal content -->
-          <form id="abonnement_form" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <form id="organisation_form" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->
             <div
               class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600"
@@ -352,7 +344,7 @@
             >
               <button
                 type="submit"
-                @click.prevent="update_abonnement(modal_data.id)"
+                @click.prevent="update_organisation(modal_data.id)"
                 class="text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
               >
                 Mettre à jour
@@ -397,7 +389,7 @@ import debounce from "lodash/debounce";
 import Pagination from "@/Components/Pagination.vue";
 
 const props = defineProps({
-  abonnements: Object,
+  organisations: Object,
   filters: Object,
   orgs: Object,
 });
@@ -419,9 +411,9 @@ const vHideToast = {
   }
 }
 
-function openModal(abonnement) {
+function openModal(organisation) {
 closed.value = false;
-modal_data.value = abonnement;
+modal_data.value = organisation;
 }
 
 function closeModal() {
@@ -430,17 +422,17 @@ modal_data.value = null;
 }
 
 watch(search, debounce(function (value) {
-  Inertia.get("/abonnement", { search: value }, { preserveState: true, replace: true });
+  Inertia.get("/organisation", { search: value }, { preserveState: true, replace: true });
 }, 300));
 
-function update_abonnement(id) {
-    let form = document.getElementById("abonnement_form");
+function update_organisation(id) {
+    let form = document.getElementById("organisation_form");
     let formData = new FormData(form);
     let data = {};
     for (let entry of formData.entries()) {
         data[entry[0]] = entry[1];
     }
-    Inertia.post("/abonnement/"+id, data, { preserveState: true, replace: true });
+    Inertia.post("/organisation/"+id, data, { preserveState: true, replace: true });
     closed.value = true;
     toasted.value = true;
 }

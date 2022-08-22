@@ -9,5 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Facture extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+
+    public function abonnement()
+    {
+        return $this->belongsTo(Abonnement::class, 'abonnement_id');
+    }
 }

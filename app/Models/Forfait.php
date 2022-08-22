@@ -13,6 +13,6 @@ class Forfait extends Model
 
     public function abonnements()
     {
-        return $this->hasMany(Abonnement::class);
+        return $this->belongsToMany(Abonnement::class);
     }
 }

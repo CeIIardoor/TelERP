@@ -25,9 +25,9 @@ class Abonnement extends Model
         return $this->belongsTo(Organisation::class);
     }
 
-    public function forfait()
+    public function factures()
     {
-        return $this->hasOne(Forfait::class);
+        return $this->hasMany(Facture::class);
     }
 
     public function scopeFilterOnlyTrashed($query)

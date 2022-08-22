@@ -31,6 +31,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\Organisation::factory(20)->create();
         \App\Models\Forfait::factory(5)->create();
         \App\Models\Abonnement::factory(50)->create();
-        \App\Models\Facture::factory(50)->create();
+        \App\Models\Facture::factory(500)->create();
     }
 }

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('date')->nullable();
             $table->integer('montant_supplementaire')->default(0);
             $table->date('echeance')->nullable();
-            $table->enum('statut',['Payée','Non payée'])->default('Non payée');
+            $table->enum('statut',['Payée','En attente','Non payée'])->default('Non payée');
             $table->string('F_OHXACT', 100)->nullable();
             $table->string('F_CUSTCODE', 100)->nullable();
             $table->string('CUSTCODE', 100)->nullable();

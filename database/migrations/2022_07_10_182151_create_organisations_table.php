@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('sigle', 50);
             $table->string('ville', 50);
             $table->string('region', 50);
-            $table->string('code postal', 50);
+            $table->string('code_postal', 50);
             $table->string('email', 50);
             $table->string('adresse', 100);
             $table->timestamp('deleted_at')->nullable();

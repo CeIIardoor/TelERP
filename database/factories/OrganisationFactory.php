@@ -27,7 +27,7 @@ class OrganisationFactory extends Factory
             'ville' => $this->faker->city,
             'n_client' => $this->faker->numerify('NCLI######'),
             'region' => $this->faker->region,
-            'code postal' => $this->faker->numerify('#####'),
+            'code_postal' => $this->faker->numerify('#####'),
             'email' => $this->faker->safeEmail,
             'adresse' => $this->faker->address,
         ];
