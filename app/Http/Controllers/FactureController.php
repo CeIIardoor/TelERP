@@ -11,6 +11,7 @@ use Redirect;
 use Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
+use PDF;
 
 class FactureController extends Controller
 {
@@ -68,6 +69,38 @@ class FactureController extends Controller
                         'CMOTIF_RS' => $facture->CMOTIF_RS,
                     ]),
             ]);
+    }
+
+    public function download($id){
+        $facture = Facture::findOrFail($id);
+
+        $data = [
+            'id' => $facture->id,
+            'date' => $facture->date,
+            'montant_supplementaire' => $facture->montant_supplementaire,
+            'echeance' => $facture->echeance,
+            'statut' => $facture->statut,
+            'F_OHXACT' => $facture->F_OHXACT,
+            'F_CUSTCODE' => $facture->F_CUSTCODE,
+            'CUSTCODE' => $facture->CUSTCODE,
+            'DOHA' => $facture->DOHA,
+            'ND_SUP' => $facture->ND_SUP,
+            'LOGIN' => $facture->LOGIN,
+            'REF_FACT' => $facture->REF_FACT,
+            'PRODUIT' => $facture->PRODUIT,
+            'PL_TAR' => $facture->PL_TAR,
+            'DR' => $facture->DR,
+            'F21' => $facture->F21,
+            'F22' => $facture->F22,
+            'F23' => $facture->F23,
+            'intrus' => $facture->intrus,
+            'justif' => $facture->justif,
+            'CMOTIF_RS' => $facture->CMOTIF_RS,
+        ];
+
+        $pdf = PDF::loadView('Facture', $data);
+
+        return $pdf->download('itsolutionstuff.pdf');
     }
 
     public function destroy(facture $facture)

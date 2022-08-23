@@ -47,10 +47,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('corbeille/abonnement/{id}/destroy', [AbonnementController::class, 'destroy'])->name('corbeille.abonnement.destroy');
     // CRUD Factures
     Route::get('abonnement/{id}/factures', [FactureController::class, 'index'])->name('facture.index');
-    Route::post('facture/{facture:id}/download', [FactureController::class, 'download'])->name('facture.download');
+    Route::get('facture/{facture:id}/download', [FactureController::class, 'download'])->name('facture.download');
     Route::get('facture/{facture:id}/destroy', [FactureController::class, 'destroy'])->name('facture.destroy');
-    // Corbeille Factures
-    Route::get('corbeille/facture', [FactureController::class, 'corbeille'])->name('corbeille.facture');
 });
 
 
