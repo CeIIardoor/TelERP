@@ -12,6 +12,7 @@ use Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use PDF;
+use DB;
 
 class FactureController extends Controller
 {
@@ -73,34 +74,13 @@ class FactureController extends Controller
 
     public function download($id){
         $facture = Facture::findOrFail($id);
+        $abonnement = Abonnement::findOrFail($facture->abonnement_id);
+        $forfait = DB::table('forfaits')->where('id', $abonnement->forfait_id)->first();
+        $organisation = Organisation::findOrFail($abonnement->organisation_id);
 
-        $data = [
-            'id' => $facture->id,
-            'date' => $facture->date,
-            'montant_supplementaire' => $facture->montant_supplementaire,
-            'echeance' => $facture->echeance,
-            'statut' => $facture->statut,
-            'F_OHXACT' => $facture->F_OHXACT,
-            'F_CUSTCODE' => $facture->F_CUSTCODE,
-            'CUSTCODE' => $facture->CUSTCODE,
-            'DOHA' => $facture->DOHA,
-            'ND_SUP' => $facture->ND_SUP,
-            'LOGIN' => $facture->LOGIN,
-            'REF_FACT' => $facture->REF_FACT,
-            'PRODUIT' => $facture->PRODUIT,
-            'PL_TAR' => $facture->PL_TAR,
-            'DR' => $facture->DR,
-            'F21' => $facture->F21,
-            'F22' => $facture->F22,
-            'F23' => $facture->F23,
-            'intrus' => $facture->intrus,
-            'justif' => $facture->justif,
-            'CMOTIF_RS' => $facture->CMOTIF_RS,
-        ];
+        $pdf = PDF::loadView('Facture', compact('facture', 'abonnement', 'organisation', 'forfait'));
 
-        $pdf = PDF::loadView('Facture', $data);
-
-        return $pdf->download('itsolutionstuff.pdf');
+        return $pdf->download('Facture '.$facture->CUSTCODE.'.pdf');
     }
 
     public function destroy(facture $facture)
