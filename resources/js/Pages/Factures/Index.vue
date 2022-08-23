@@ -40,10 +40,10 @@
             class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
           >
             <tr>
-              <th scope="col" class="py-3 px-6">Nom Complet</th>
-              <th scope="col" class="py-3 px-6">Ville</th>
-              <th scope="col" class="py-3 px-6">Organisation</th>
-              <th scope="col" class="py-3 px-6">N<sup>o</sup> Client</th>
+              <th scope="col" class="py-3 px-6">F_CUSTCODE</th>
+              <th scope="col" class="py-3 px-6">Date</th>
+              <th scope="col" class="py-3 px-6">Ref Facture</th>
+              <th scope="col" class="py-3 px-6">Statut</th>
               <th scope="col" class="py-3 px-6">Actions</th>
             </tr>
           </thead>
@@ -59,26 +59,61 @@
               >
                 <div class="pl-3">
                   <div class="text-base font-semibold">
-                    {{ facture.id }} {{ facture.id }}
+                    {{ facture.F_CUSTCODE }}
                   </div>
-                  <div class="font-normal text-gray-500">{{ facture.id }}</div>
+                  <div class="font-normal text-gray-500">
+                    {{ abonnement.nom }} {{ abonnement.prenom }}
+                  </div>
                 </div>
               </th>
               <td class="py-4 px-6">
                 <div class="flex items-center">
-                  {{ facture.id }}
+                  {{ facture.date }}
                 </div>
               </td>
               <td class="py-4 px-6">
-                <div class="text-base font-semibold">{{ abonnement.nom }}</div>
-                <div class="font-normal text-gray-500">{{ abonnement.prenom }}</div>
+                <div class="text-base font-semibold">{{ facture.REF_FACT }}</div>
+                <div class="font-normal text-gray-500">{{ facture.CMOTIF_RS }}</div>
               </td>
               <td class="py-4 px-6">
                 <div class="flex items-center">
-                  {{ facture.id }}
+                  <div class="flex items-center">
+                    <div
+                      v-if="facture.statut == 'Payée'"
+                      class="h-2.5 w-2.5 rounded-full bg-green-400 mr-2"
+                    ></div>
+                    <div
+                      v-if="facture.statut == 'En attente'"
+                      class="h-2.5 w-2.5 rounded-full bg-orange-400 mr-2"
+                    ></div>
+                    <div
+                      v-if="facture.statut == 'Non payée'"
+                      class="h-2.5 w-2.5 rounded-full bg-red-400 mr-2"
+                    ></div>
+                    {{ facture.statut }}
+                  </div>
                 </div>
               </td>
               <td class="md:flex h-4 w-4">
+                <Link
+                  :href="'/facture/' + facture.id + '/download'"
+                  class="text-blue-500 hover:text-blue-700 text-sm ml-3"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                </Link>
                 <!-- Modal toggle -->
                 <a
                   href="#"
@@ -105,7 +140,7 @@
 
                 <!-- Delete record -->
                 <Link
-                  :href="`/facture/${facture.id}/delete`"
+                  :href="`/facture/${facture.id}/destroy`"
                   class="text-red-600 hover:text-red-900"
                 >
                   <svg
@@ -151,7 +186,7 @@
                 class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600"
               >
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                  Éditer
+                  Détails de la facture
                 </h3>
                 <button
                   type="button"
@@ -178,182 +213,202 @@
                 <div class="grid grid-cols-9 gap-6">
                   <div class="col-span-6 sm:col-span-3">
                     <label
-                      for="prenom"
+                      for="date"
                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >Prenom</label
+                      >Date</label
                     >
                     <input
-                      id="prenom"
+                      readonly
+                      id="date"
                       type="text"
-                      name="prenom"
+                      name="date"
                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-emerald-600 focus:border-emerald-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"
                       placeholder="Prénom"
                       required=""
-                      :value="modal_data.prenom"
+                      :value="modal_data.date"
                     />
                   </div>
                   <div class="col-span-6 sm:col-span-3">
                     <label
-                      for="nom"
+                      for="montant_supplementaire"
                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >Nom</label
+                      >Montant_supplementaire</label
                     >
                     <input
+                      readonly
                       type="text"
-                      name="nom"
-                      id="nom"
+                      name="montant_supplementaire"
+                      id="montant_supplementaire"
+                      placeholder="Montant supplementaire"
                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-emerald-600 focus:border-emerald-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"
-                      placeholder="Nom"
                       required=""
-                      :value="modal_data.nom"
+                      :value="modal_data.montant_supplementaire"
                     />
                   </div>
                   <div class="col-span-6 sm:col-span-3">
                     <label
-                      for="n_client"
+                      for="echeance"
                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >N° client</label
+                      >Echéance</label
                     >
                     <input
+                      readonly
                       type="text"
-                      name="n_client"
-                      id="n_client"
+                      name="echeance"
+                      id="echeance"
                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-emerald-600 focus:border-emerald-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"
-                      placeholder="N_client"
+                      placeholder="Echeance"
                       required=""
-                      :value="modal_data.n_client"
+                      :value="modal_data.echeance"
                     />
                   </div>
                   <div class="col-span-6 sm:col-span-3">
                     <label
-                      for="CIN"
+                      for="statut"
                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >CIN</label
+                      >statut</label
                     >
                     <input
+                      readonly
                       type="text"
-                      name="CIN"
-                      id="CIN"
+                      name="statut"
+                      id="statut"
                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-emerald-600 focus:border-emerald-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"
-                      placeholder="CIN"
+                      placeholder="statut"
                       required=""
-                      :value="modal_data.CIN"
+                      :value="modal_data.statut"
                     />
                   </div>
                   <div class="col-span-6 sm:col-span-3">
                     <label
-                      for="ville"
+                      for="F_OHXACT"
                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >Ville</label
+                      >F_OHXACT</label
                     >
                     <input
+                      readonly
                       type="text"
-                      name="ville"
-                      id="Ville"
+                      name="F_OHXACT"
+                      id="F_OHXACT"
                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-emerald-600 focus:border-emerald-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"
-                      placeholder="ville"
-                      :value="modal_data.ville"
+                      placeholder="F_OHXACT"
+                      :value="modal_data.F_OHXACT"
                     />
                   </div>
 
                   <div class="col-span-6 sm:col-span-3">
                     <label
-                      for="derniere_affectation"
+                      for="F_CUSTCODE"
                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >Derniere affectation</label
+                      >F_CUSTCODE</label
                     >
                     <input
+                      readonly
                       type="text"
-                      name="derniere_affectation"
-                      id="derniere_affectation"
+                      name="F_CUSTCODE"
+                      id="F_CUSTCODE"
                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-emerald-600 focus:border-emerald-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"
-                      placeholder="Derniere Affectaion"
-                      :value="modal_data.derniere_affectation"
+                      placeholder="F_CUSTCODE"
+                      :value="modal_data.F_CUSTCODE"
                     />
                   </div>
                   <div class="col-span-6 sm:col-span-3">
                     <label
-                      for="dernier_grade"
+                      for="DOHA"
                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >Dernier Grade</label
+                      >DOHA</label
                     >
                     <input
+                      readonly
                       type="text"
-                      name="dernier_grade"
-                      id="dernier_grade"
+                      name="DOHA"
+                      id="DOHA"
                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-emerald-600 focus:border-emerald-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"
-                      placeholder="Dernier Grade"
-                      :value="modal_data.dernier_grade"
+                      placeholder="DOHA"
+                      :value="modal_data.DOHA"
                     />
                   </div>
                   <div class="col-span-6 sm:col-span-3">
                     <label
-                      for="gestionnaire"
+                      for="ND_SUP"
                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >Gestionnaire</label
+                      >ND_SUP</label
                     >
                     <input
+                      readonly
                       type="text"
-                      name="gestionnaire"
-                      id="gestionnaire"
+                      name="ND_SUP"
+                      id="ND_SUP"
                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-emerald-600 focus:border-emerald-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"
-                      placeholder="Gestionnaire"
-                      :value="modal_data.gestionnaire"
+                      placeholder="ND_SUP"
+                      :value="modal_data.ND_SUP"
                     />
                   </div>
                   <div class="col-span-6 sm:col-span-3">
                     <label
-                      for="derniere_province"
+                      for="LOGIN"
                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >Derniere_province</label
+                      >LOGIN</label
                     >
                     <input
+                      readonly
                       type="text"
-                      name="derniere_province"
-                      id="derniere_province"
+                      name="LOGIN"
+                      id="LOGIN"
                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-emerald-600 focus:border-emerald-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"
-                      placeholder="Dernière province"
-                      :value="modal_data.derniere_province"
+                      placeholder="Login"
+                      :value="modal_data.LOGIN"
                     />
                   </div>
-                  <div class="col-span-6 sm:col-span-9">
+                  <div class="col-span-6 sm:col-span-3">
                     <label
-                      for="organisation_id"
+                      for="REF_FACT"
                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >Organisation</label
+                      >REF_FACT</label
                     >
-                    <select
-                      name="organisation_id"
-                      id="organisation_id"
+                    <input
+                      readonly
+                      type="text"
+                      name="REF_FACT"
+                      id="REF_FACT"
                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-emerald-600 focus:border-emerald-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"
-                      placeholder="Organisation"
-                      required=""
+                      placeholder="REF_FACT"
+                      :value="modal_data.REF_FACT"
+                    />
+                  </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label
+                      for="PRODUIT"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >PRODUIT</label
                     >
-                      <option disabled>Choisir une organisation</option>
-                      <option
-                        v-for="org in orgs"
-                        :key="org.id"
-                        :selected="org.id === modal_data.organisation.id"
-                        :value="org.id"
-                      >
-                        {{ org.intitule }}
-                      </option>
-                    </select>
+                    <input
+                      readonly
+                      type="text"
+                      name="PRODUIT"
+                      id="PRODUIT"
+                      class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-emerald-600 focus:border-emerald-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"
+                      placeholder="Produit"
+                      :value="modal_data.PRODUIT"
+                    />
+                  </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label
+                      for="PL_TAR"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >PL_TAR</label
+                    >
+                    <input
+                      readonly
+                      type="text"
+                      name="PL_TAR"
+                      id="PL_TAR"
+                      class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-emerald-600 focus:border-emerald-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"
+                      placeholder="PL_TAR"
+                      :value="modal_data.PL_TAR"
+                    />
                   </div>
                 </div>
-              </div>
-
-              <!-- Modal footer -->
-              <div
-                class="flex items-center flex-row-reverse p-6 space-x-1 rounded-b border-t border-gray-200 dark:border-gray-600"
-              >
-                <button
-                  type="submit"
-                  @click.prevent="update_facture(modal_data.id)"
-                  class="text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"
-                >
-                  Mettre à jour
-                </button>
               </div>
             </form>
           </div>

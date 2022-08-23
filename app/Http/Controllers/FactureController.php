@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Abonnement;
 use App\Models\Organisation;
+use App\Models\Facture;
 use Auth;
 use Redirect;
 use Request;
@@ -47,7 +48,24 @@ class FactureController extends Controller
                         'id' => $facture->id,
                         'date' => $facture->date,
                         'montant_supplementaire' => $facture->montant_supplementaire,
+                        'echeance' => $facture->echeance,
                         'statut' => $facture->statut,
+                        'F_OHXACT' => $facture->F_OHXACT,
+                        'F_CUSTCODE' => $facture->F_CUSTCODE,
+                        'CUSTCODE' => $facture->CUSTCODE,
+                        'DOHA' => $facture->DOHA,
+                        'ND_SUP' => $facture->ND_SUP,
+                        'LOGIN' => $facture->LOGIN,
+                        'REF_FACT' => $facture->REF_FACT,
+                        'PRODUIT' => $facture->PRODUIT,
+                        'PL_TAR' => $facture->PL_TAR,
+                        'DR' => $facture->DR,
+                        'F21' => $facture->F21,
+                        'F22' => $facture->F22,
+                        'F23' => $facture->F23,
+                        'intrus' => $facture->intrus,
+                        'justif' => $facture->justif,
+                        'CMOTIF_RS' => $facture->CMOTIF_RS,
                     ]),
             ]);
     }
