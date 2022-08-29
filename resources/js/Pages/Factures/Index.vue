@@ -32,8 +32,27 @@
                 />
               </svg>
             </Link>
-            Importer une facture
+            Importer des factures
           </div>
+          <a :href="`/factures/${$page.props.abonnement.id}/exportxlsx`">
+            <div class="flex gap-2 mr-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6 text-green-500"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 13.5l3 3m0 0l3-3m-3 3v-6m1.06-4.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
+                />
+              </svg>
+              Exporter (.xlsx)
+            </div>
+          </a>
         </div>
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead
@@ -239,7 +258,7 @@
                       type="text"
                       name="montant_supplementaire"
                       id="montant_supplementaire"
-                      placeholder="Montant supplementaire"
+                      placeholder="Montant facture"
                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-emerald-600 focus:border-emerald-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"
                       required=""
                       :value="modal_data.montant_supplementaire"

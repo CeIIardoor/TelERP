@@ -13,6 +13,9 @@ use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use PDF;
 use DB;
+use Excel;
+use App\Exports\FacturesExport;
+
 
 class FactureController extends Controller
 {
@@ -81,6 +84,11 @@ class FactureController extends Controller
         $pdf = PDF::loadView('Facture', compact('facture', 'abonnement', 'organisation', 'forfait'));
 
         return $pdf->download('Facture '.$facture->CUSTCODE.'.pdf');
+    }
+
+    public function exportxlsx($id){
+        $abonnement = Abonnement::findOrFail($id);
+        return Excel::download(new FacturesExport($id), 'Factures '.$abonnement->n_client.'.xlsx');
     }
 
     public function destroy(facture $facture)

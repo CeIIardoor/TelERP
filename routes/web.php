@@ -49,6 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('abonnement/{id}/factures', [FactureController::class, 'index'])->name('facture.index');
     Route::get('facture/{facture:id}/download', [FactureController::class, 'download'])->name('facture.download');
     Route::get('facture/{facture:id}/destroy', [FactureController::class, 'destroy'])->name('facture.destroy');
+    Route::get('factures/{id}/exportxlsx', [FactureController::class, 'exportxlsx'])->name('facture.exportxlsx');
 });
 
 

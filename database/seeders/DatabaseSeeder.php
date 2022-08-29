@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 
 class DatabaseSeeder extends Seeder
@@ -32,5 +33,16 @@ class DatabaseSeeder extends Seeder
         \App\Models\Forfait::factory(5)->create();
         \App\Models\Abonnement::factory(50)->create();
         \App\Models\Facture::factory(500)->create();
+
+        for($i = 1; $i <= 50; $i++) {
+            $factures = \App\Models\Facture::where('abonnement_id', $i)->get();
+            $m = 0;
+            foreach($factures as $facture) {
+                $facture->update([
+                    'date' => Carbon::now()->subMonths($m++)->format('Y-m-d'),
+                ]);
+            }
+
+        }
     }
 }
