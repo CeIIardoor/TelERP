@@ -10,6 +10,17 @@ class Facture extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'date',
+        'montant_supplementaire',
+        'echeance',
+        'statut',
+        'F_OHXACT',
+        'F_CUSTCODE',
+        'CUSTCODE',
+        'abonnement_id',
+    ];
+
     public function abonnement()
     {
         return $this->belongsTo(Abonnement::class, 'abonnement_id');
