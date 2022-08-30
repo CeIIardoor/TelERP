@@ -13,16 +13,19 @@
       <div class="overflow-x-auto relative max-w-full shadow-lg sm:rounded-lg">
         <div class="flex justify-between items-center p-4 bg-white dark:bg-gray-800">
           <div class="flex gap-2">
-            <label
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              for="file_input"
-              >Importer des factures</label
-            >
-            <input
-              class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-              id="file_input"
-              type="file"
-            />
+            <form @submit.prevent="submit">
+              <input
+                type="file"
+                name="fichierfactures"
+                @input="form.fichierfactures = $event.target.files[0]"
+              />
+              <button
+                type="submit"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Importer des factures
+              </button>
+            </form>
           </div>
           <a :href="`/factures/${$page.props.abonnement.id}/exportxlsx`">
             <div class="flex gap-2 mr-2">
@@ -531,11 +534,22 @@ import { ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import debounce from "lodash/debounce";
 import Pagination from "@/Components/Pagination.vue";
+import { useForm } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
   abonnement: Object,
   factures: Object,
 });
+
+const form = useForm({
+  fichierfactures: "",
+});
+
+const submit = () => {
+  form.post("/factures/" + props.abonnement.id + "/importxlsx", {
+    forceFormData: true,
+  });
+};
 
 let closed = ref(true);
 let toasted = ref(true);
