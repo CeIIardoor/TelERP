@@ -108,6 +108,7 @@ class FactureController extends Controller
             foreach($data as $facture){
                 $facture = array_combine(['date', 'montant_supplementaire', 'echeance', 'statut', 'F_OHXACT', 'F_CUSTCODE', 'CUSTCODE'], $facture);
                 $facture['abonnement_id'] = $id;
+                $facture['montant_supplementaire'] = $facture['montant_supplementaire'] == null ? 0 : $facture['montant_supplementaire'];
                 Facture::create($facture);
             }
             return Redirect::back()->with('success', 'Factures importées avec succès');

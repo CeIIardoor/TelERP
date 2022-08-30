@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('abonnement_id');
             $table->foreign('abonnement_id')->nullable()->references('id')->on('abonnements');
             $table->date('date')->nullable();
-            $table->integer('montant_supplementaire')->default(0);
+            $table->integer('montant_supplementaire')->default('0');
             $table->date('echeance')->nullable();
             $table->enum('statut',['Payée','En attente','Non payée'])->default('Non payée');
             $table->string('F_OHXACT', 100)->nullable();
