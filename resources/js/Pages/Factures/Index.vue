@@ -13,26 +13,16 @@
       <div class="overflow-x-auto relative max-w-full shadow-lg sm:rounded-lg">
         <div class="flex justify-between items-center p-4 bg-white dark:bg-gray-800">
           <div class="flex gap-2">
-            <Link
-              href="/facture/create"
-              class="text-green-500 hover:text-green-700 text-sm ml-3"
+            <label
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              for="file_input"
+              >Importer des factures</label
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
-                />
-              </svg>
-            </Link>
-            Importer des factures
+            <input
+              class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+              id="file_input"
+              type="file"
+            />
           </div>
           <a :href="`/factures/${$page.props.abonnement.id}/exportxlsx`">
             <div class="flex gap-2 mr-2">

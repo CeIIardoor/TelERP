@@ -91,6 +91,31 @@ class FactureController extends Controller
         return Excel::download(new FacturesExport($id), 'Factures '.$abonnement->n_client.'.xlsx');
     }
 
+
+    public function importxlsx($id){
+        $abonnement = Abonnement::findOrFail($id);
+        $file = Request::file('file');
+        $extension = $file->getClientOriginalExtension();
+        if($extension == 'xlsx'){
+            $data = Excel::toArray(new FacturesImport, $file);
+            $data = $data[0];
+            $data = array_slice($data, 1);
+            foreach($data as $facture){
+                $facture = array_combine(['F_OHXACT','F_CUSTCODE','CUSTCODE', 'ND_SUP', 'NCLI','NOM','LPROD','CATEGORIE','AGENCE','CMOTIF_RS','REF_FACT','MNT_FACT','echeance','PL_TAR','PRODUIT'], $facture);
+                $facture['abonnement_id'] = $id;
+                $facture['statut'] = 'En attente';
+                $facture['date'] = date('Y-m-d');
+                $facture['LOGIN'] = Auth::user()->name;
+
+                dd($facture);
+                Facture::create($facture);
+            }
+            return Redirect::route('factures.index', $id)->with('success', 'Factures importées avec succès');
+        }else{
+            return Redirect::route('factures.index', $id)->with('error', 'Le fichier doit être au format xlsx');
+        }
+    }
+
     public function destroy(facture $facture)
     {
         $facture->delete();

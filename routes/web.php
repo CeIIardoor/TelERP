@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('facture/{facture:id}/download', [FactureController::class, 'download'])->name('facture.download');
     Route::get('facture/{facture:id}/destroy', [FactureController::class, 'destroy'])->name('facture.destroy');
     Route::get('factures/{id}/exportxlsx', [FactureController::class, 'exportxlsx'])->name('facture.exportxlsx');
+    Route::post('factures/{id}/importxlsx', [FactureController::class, 'importxlsx'])->name('facture.importxlsx');
 });
 
 
