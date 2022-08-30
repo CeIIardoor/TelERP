@@ -22,8 +22,8 @@ class FacturesExport implements FromCollection
     {
         $factures = Facture::where('abonnement_id', $this->id)->get(['date', 'montant_supplementaire', 'echeance', 'statut', 'F_OHXACT', 'F_CUSTCODE', 'CUSTCODE']);
         $factures->map(function($facture) {
-            $facture->date = Carbon::parse($facture->date)->format('d-m-Y');
-            $facture->echeance = Carbon::parse($facture->echeance)->format('d-m-Y');
+            $facture->date = Carbon::parse($facture->date)->format('Y-m-d');
+            $facture->echeance = Carbon::parse($facture->echeance)->format('Y-m-d');
             return $facture;
         });
         $factures->prepend(['Date', 'Montant Supplementaire', 'Echéance', 'Statut', 'F_OHXACT', 'F_CUSTCODE', 'CUSTCODE']);

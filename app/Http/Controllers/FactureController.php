@@ -106,7 +106,6 @@ class FactureController extends Controller
             $data = $data[0];
             $data = array_slice($data, 1);
             foreach($data as $facture){
-                $facture['date'] = Carbon::parse($facture['date'])->format('Y-m-d');
                 $facture = array_combine(['date', 'montant_supplementaire', 'echeance', 'statut', 'F_OHXACT', 'F_CUSTCODE', 'CUSTCODE'], $facture);
                 $facture['abonnement_id'] = $id;
                 Facture::create($facture);
