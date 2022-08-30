@@ -26,7 +26,7 @@ class FacturesExport implements FromCollection
             $facture->echeance = Carbon::parse($facture->echeance)->format('Y-m-d');
             return $facture;
         });
-        $factures->prepend(['Date', 'Montant Supplementaire', 'Echéance', 'Statut', 'F_OHXACT', 'F_CUSTCODE', 'CUSTCODE']);
+        $factures->prepend(['date', 'montant_supplementaire', 'echeance', 'statut', 'F_OHXACT', 'F_CUSTCODE', 'CUSTCODE']);
         return $factures;
     }
 }
