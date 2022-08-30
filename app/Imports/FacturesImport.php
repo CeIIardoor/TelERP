@@ -23,7 +23,7 @@ class FacturesImport implements ToModel
     {
         return new Facture([
             'date' => $row[0],
-            'montant_supplementaire' => $row[1],
+            'montant_supplementaire' => $row[1] ?? 0,
             'echeance' => $row[2],
             'statut' => $row[3],
             'F_OHXACT' => $row[4],
