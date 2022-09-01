@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Abonnement;
 use App\Models\Organisation;
 use App\Models\Facture;
+use App\Models\Forfait;
 use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\OrganisationController;
 use App\Http\Controllers\FactureController;
@@ -33,6 +34,9 @@ Route::get('organisation', function () {
     return Organisation::all();
 })->middleware(['auth'])->name('organisation');
 
+Route::get('forfait', function () {
+    return Forfait::all();
+})->middleware(['auth'])->name('forfait');
 
 Route::group(['middleware' => 'auth'], function () {
     // CRUD Abonnements

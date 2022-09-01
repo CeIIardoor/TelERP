@@ -40,6 +40,15 @@ const showingNavigationDropdown = ref(false);
                 >
                   Abonnements
                 </NavLink>
+                <NavLink
+                  :href="route('organisation')"
+                  :active="route().current('organisation')"
+                >
+                  Organisations
+                </NavLink>
+                <NavLink :href="route('forfait')" :active="route().current('forfait')">
+                  Forfaits
+                </NavLink>
               </div>
             </div>
 
@@ -138,6 +147,18 @@ const showingNavigationDropdown = ref(false);
               :active="route().current('abonnement')"
             >
               Abonnements
+            </ResponsiveNavLink>
+            <ResponsiveNavLink
+              :href="route('organisation')"
+              :active="route().current('organisation')"
+            >
+              Organisations
+            </ResponsiveNavLink>
+            <ResponsiveNavLink
+              :href="route('forfait')"
+              :active="route().current('forfait')"
+            >
+              Forfaits
             </ResponsiveNavLink>
           </div>
 

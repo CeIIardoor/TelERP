@@ -107,7 +107,7 @@
 						<table>
 							<tr>
 								<td class="title">
-                                    <img src="https://assets.turbologo.com/blog/fr/2018/03/19134536/prozrachniy-logo-1.png" style="width: 100%; max-width: 150px">
+                                    <img src="{{URL::asset('/assets/img/logo.png')}}" style="width: 100%; max-width: 150px">
 								</td>
 
 								<td>
