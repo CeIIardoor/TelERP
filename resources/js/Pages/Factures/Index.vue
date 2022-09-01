@@ -12,21 +12,33 @@
     <div class="container pt-4 m-auto">
       <div class="overflow-x-auto relative max-w-full shadow-lg sm:rounded-lg">
         <div class="flex justify-between items-center p-4 bg-white dark:bg-gray-800">
-          <div class="flex gap-2">
-            <form @submit.prevent="submit">
-              <input
-                type="file"
-                name="fichierfactures"
-                @input="form.fichierfactures = $event.target.files[0]"
-              />
-              <button
-                type="submit"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          <form @submit.prevent="submit" class="flex">
+            <label class="block text-gray-700 text-sm font-bold pt-2">
+              Importer des factures :</label
+            >
+            <input
+              type="file"
+              name="fichierfactures"
+              class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:mt-2 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              @input="form.fichierfactures = $event.target.files[0]"
+            />
+            <button type="submit">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6 text-blue-500"
               >
-                Importer des factures
-              </button>
-            </form>
-          </div>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M7.5 7.5h-.75A2.25 2.25 0 004.5 9.75v7.5a2.25 2.25 0 002.25 2.25h7.5a2.25 2.25 0 002.25-2.25v-7.5a2.25 2.25 0 00-2.25-2.25h-.75m0-3l-3-3m0 0l-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 012.25 2.25v7.5a2.25 2.25 0 01-2.25 2.25h-7.5a2.25 2.25 0 01-2.25-2.25v-.75"
+                />
+              </svg>
+            </button>
+          </form>
           <a :href="`/factures/${$page.props.abonnement.id}/exportxlsx`">
             <div class="flex gap-2 mr-2">
               <svg
