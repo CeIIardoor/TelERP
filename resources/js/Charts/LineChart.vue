@@ -36,6 +36,11 @@ export default defineComponent({
   provide: {
     [THEME_KEY]: "light",
   },
+  data() {
+    return {
+      option: [],
+    };
+  },
 });
 </script>
 

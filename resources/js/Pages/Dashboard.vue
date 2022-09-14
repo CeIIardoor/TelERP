@@ -107,13 +107,14 @@ const ForfaitsChartOptions = $ref({
 
 const FacturesChartOptions = $ref({
   title: {
-    text: "Cout des factures par organisation",
+    text: "Cout des factures par organisation (2022)",
   },
   tooltip: {
     trigger: "axis",
   },
   legend: {
     data: legend_data,
+    top: 30,
   },
   grid: {
     left: "3%",
@@ -122,6 +123,7 @@ const FacturesChartOptions = $ref({
     containLabel: true,
   },
   toolbox: {
+    show: true,
     feature: {
       saveAsImage: {},
     },
@@ -154,19 +156,28 @@ function getOrgData() {
   abonnement_series.splice(0);
   legend_data.splice(0);
 
+  let totalparmois = [];
+
   let abonnementsfiltres = props.abonnements.filter(
     (abonnement) => abonnement.organisation_id == org_id
   );
 
   abonnementsfiltres.forEach((abonnement) => {
+    totalparmois.splice(0);
+    legend_data.push(abonnement.numero_ligne);
+    let factures_data = props.factures.filter(
+      (facture) =>
+        facture.abonnement_id == abonnement.id && facture.date.split("-")[0] == 2022
+    );
+    factures_data = factures_data.reverse();
+    factures_data.forEach((facture) => {
+      totalparmois.push(facture.montant_supplementaire + abonnement.mensualite);
+    });
     abonnement_series.push({
       name: abonnement.numero_ligne,
       type: "line",
-      stack: "Total",
-      data: [120, 132, 101, 134, 90, 230, 210, 120, 132, 101, 134, 90],
+      data: [...totalparmois],
     });
-    legend_data.push(abonnement.numero_ligne);
   });
-  console.log(abonnement_series, legend_data);
 }
 </script>

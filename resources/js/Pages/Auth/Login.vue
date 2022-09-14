@@ -63,7 +63,7 @@ const submit = () => {
       <div class="block mt-4">
         <label class="flex items-center">
           <Checkbox name="remember" v-model:checked="form.remember" />
-            <span class="ml-2 text-sm text-gray-600">Se souvenir de moi</span>
+          <span class="ml-2 text-sm text-gray-600">Se souvenir de moi</span>
         </label>
       </div>
 
@@ -73,7 +73,7 @@ const submit = () => {
           :class="{ 'opacity-25': form.processing }"
           :disabled="form.processing"
         >
-          Log in
+          Se connecter
         </Button>
       </div>
     </form>

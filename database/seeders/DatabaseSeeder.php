@@ -39,10 +39,10 @@ class DatabaseSeeder extends Seeder
             $m = 0;
             foreach($factures as $facture) {
                 $facture->update([
+                    'echeance' => Carbon::now()->subMonths($m-1)->format('Y-m-d'),
                     'date' => Carbon::now()->subMonths($m++)->format('Y-m-d'),
                 ]);
             }
-
         }
     }
 }
