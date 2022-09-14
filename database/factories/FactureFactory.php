@@ -24,7 +24,7 @@ class FactureFactory extends Factory
         return [
             'abonnement_id' => rand(1,50),
             'date' => $this->faker->date(),
-            'montant_supplementaire' => 0,
+            'montant_supplementaire' => rand(0,200),
             'echeance' => $this->faker->date(),
             'statut' => $this->faker->randomElement(['Payée','En attente','Non payée']),
             'F_OHXACT' => $this->faker->numerify('F_OHXACT_######'),

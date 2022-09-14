@@ -116,6 +116,7 @@
                 </div>
               </td>
               <td class="md:flex h-4 w-4">
+                Factures
                 <Link
                   :href="`/abonnement/${abonnement.id}/factures`"
                   class="text-green-600 hover:text-green-900"

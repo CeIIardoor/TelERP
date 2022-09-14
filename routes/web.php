@@ -10,6 +10,7 @@ use App\Models\Forfait;
 use App\Http\Controllers\AbonnementController;
 use App\Http\Controllers\OrganisationController;
 use App\Http\Controllers\FactureController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +27,7 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 });
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
 Route::get('organisation', function () {
     return Organisation::all();

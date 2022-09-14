@@ -20,6 +20,11 @@ class Abonnement extends Model
         'deleted_at',
     ];
 
+    public function forfait()
+    {
+        return $this->belongsTo(Forfait::class);
+    }
+
     public function organisation()
     {
         return $this->belongsTo(Organisation::class);
