@@ -107,7 +107,7 @@ const ForfaitsChartOptions = $ref({
 
 const FacturesChartOptions = $ref({
   title: {
-    text: "Stacked Line",
+    text: "Cout des factures par organisation",
   },
   tooltip: {
     trigger: "axis",
