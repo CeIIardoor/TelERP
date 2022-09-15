@@ -85,7 +85,7 @@ const ForfaitsChartOptions = $ref({
   },
   series: [
     {
-      name: "Traffic Sources",
+      name: "Abonnement",
       type: "pie",
       radius: "75%",
       center: ["50%", "60%"],
