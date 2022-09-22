@@ -120,7 +120,6 @@
                   :href="`/abonnement/${abonnement.id}/factures`"
                   class="text-green-600 hover:text-green-900"
                 >
-                  Factures
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="h-6 w-6"
