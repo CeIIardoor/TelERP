@@ -20,34 +20,19 @@ const showingNavigationDropdown = ref(false);
               <!-- Logo -->
               <div class="shrink-0 flex items-center">
                 <Link :href="route('dashboard')">
-                  <ApplicationLogo class="block h-9 w-auto text-green-400" />
+                <ApplicationLogo class="block h-9 w-auto text-green-400" />
                 </Link>
               </div>
 
               <!-- Navigation Links -->
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                <NavLink
-                  :href="route('dashboard')"
-                  :active="route().current('dashboard')"
-                >
+                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                   Dashboard
                 </NavLink>
               </div>
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                <NavLink
-                  :href="route('abonnement')"
-                  :active="route().current('abonnement')"
-                >
+                <NavLink :href="route('abonnement')" :active="route().current('abonnement')">
                   Abonnements
-                </NavLink>
-                <NavLink
-                  :href="route('organisation')"
-                  :active="route().current('organisation')"
-                >
-                  Organisations
-                </NavLink>
-                <NavLink :href="route('forfait')" :active="route().current('forfait')">
-                  Forfaits
                 </NavLink>
               </div>
             </div>
@@ -58,23 +43,15 @@ const showingNavigationDropdown = ref(false);
                 <Dropdown align="right" width="48">
                   <template #trigger>
                     <span class="inline-flex rounded-md">
-                      <button
-                        type="button"
-                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                      >
+                      <button type="button"
+                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                         {{ $page.props.auth.user.name }}
 
-                        <svg
-                          class="ml-2 -mr-0.5 h-4 w-4"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fill-rule="evenodd"
+                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                          fill="currentColor">
+                          <path fill-rule="evenodd"
                             d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            clip-rule="evenodd"
-                          />
+                            clip-rule="evenodd" />
                         </svg>
                       </button>
                     </span>
@@ -91,36 +68,17 @@ const showingNavigationDropdown = ref(false);
 
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
-              <button
-                @click="showingNavigationDropdown = !showingNavigationDropdown"
-                class="inline-flex items-center justify-center p-2 rounded-md text-green-400 hover:text-green-500 hover:bg-green-100 focus:outline-none focus:bg-green-100 focus:text-green-500 transition duration-150 ease-in-out"
-              >
-                <svg
-                  class="h-6 w-6"
-                  stroke="currentColor"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    :class="{
-                      hidden: showingNavigationDropdown,
-                      'inline-flex': !showingNavigationDropdown,
-                    }"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                  <path
-                    :class="{
-                      hidden: !showingNavigationDropdown,
-                      'inline-flex': showingNavigationDropdown,
-                    }"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+              <button @click="showingNavigationDropdown = !showingNavigationDropdown"
+                class="inline-flex items-center justify-center p-2 rounded-md text-green-400 hover:text-green-500 hover:bg-green-100 focus:outline-none focus:bg-green-100 focus:text-green-500 transition duration-150 ease-in-out">
+                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                  <path :class="{
+                    hidden: showingNavigationDropdown,
+                    'inline-flex': !showingNavigationDropdown,
+                  }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                  <path :class="{
+                    hidden: !showingNavigationDropdown,
+                    'inline-flex': showingNavigationDropdown,
+                  }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
@@ -128,36 +86,21 @@ const showingNavigationDropdown = ref(false);
         </div>
 
         <!-- Responsive Navigation Menu -->
-        <div
-          :class="{
-            block: showingNavigationDropdown,
-            hidden: !showingNavigationDropdown,
-          }"
-          class="sm:hidden"
-        >
+        <div :class="{
+          block: showingNavigationDropdown,
+          hidden: !showingNavigationDropdown,
+        }" class="sm:hidden">
           <div class="pt-2 pb-3 space-y-1">
-            <ResponsiveNavLink
-              :href="route('dashboard')"
-              :active="route().current('dashboard')"
-            >
+            <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
               Dashboard
             </ResponsiveNavLink>
-            <ResponsiveNavLink
-              :href="route('abonnement')"
-              :active="route().current('abonnement')"
-            >
+            <ResponsiveNavLink :href="route('abonnement')" :active="route().current('abonnement')">
               Abonnements
             </ResponsiveNavLink>
-            <ResponsiveNavLink
-              :href="route('organisation')"
-              :active="route().current('organisation')"
-            >
+            <ResponsiveNavLink :href="route('organisation')" :active="route().current('organisation')">
               Organisations
             </ResponsiveNavLink>
-            <ResponsiveNavLink
-              :href="route('forfait')"
-              :active="route().current('forfait')"
-            >
+            <ResponsiveNavLink :href="route('forfait')" :active="route().current('forfait')">
               Forfaits
             </ResponsiveNavLink>
           </div>
@@ -199,16 +142,12 @@ const showingNavigationDropdown = ref(false);
   <hr />
   <hr />
   <hr />
-  <footer
-    class="p-4 bg-white rounded-lg shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800"
-  >
-    <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
-      >© 2022 <a href="https://cellardoor.info/" class="hover:underline">MedinaTech™</a>.
+  <footer class="p-4 bg-white rounded-lg shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800">
+    <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 <a href="https://cellardoor.info/"
+        class="hover:underline">MedinaTech™</a>.
       Tout droits résérvés.
     </span>
-    <ul
-      class="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
-    >
+    <ul class="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
       <li>
         <a href="#" class="mr-4 hover:underline md:mr-6">À propos</a>
       </li>

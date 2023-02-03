@@ -162,9 +162,6 @@
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import { MenuIcon, XIcon, HomeIcon, CubeTransparentIcon } from "@heroicons/vue/outline";
 const navigation = [
-  { name: "A propos", href: "/apropos" },
-  { name: "Tarifs", href: "/tarifs" },
-  { name: "Documentation", href: "/docs" },
 ];
 export default {
   components: {
