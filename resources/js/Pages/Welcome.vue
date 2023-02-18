@@ -144,7 +144,7 @@
               <p
                 class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0"
               >
-                Une PWA qui regroupe l'ensemble des tâches liées à l'utilisation et à la
+                Une application Web et Desktop centralisée qui regroupe l'ensemble des tâches liées à l'utilisation et à la
                 gestion des abonnements téléphoniques au sein d'une organisation.
               </p>
             </div>
@@ -162,6 +162,9 @@
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import { MenuIcon, XIcon, HomeIcon, CubeTransparentIcon } from "@heroicons/vue/outline";
 const navigation = [
+  { name: "A propos", href: "#" },
+  { name: "Tarifs", href: "#" },
+  { name: "Documentation", href: "#" },
 ];
 export default {
   components: {
