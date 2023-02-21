@@ -97,12 +97,6 @@ const showingNavigationDropdown = ref(false);
             <ResponsiveNavLink :href="route('abonnement')" :active="route().current('abonnement')">
               Abonnements
             </ResponsiveNavLink>
-            <ResponsiveNavLink :href="route('organisation')" :active="route().current('organisation')">
-              Organisations
-            </ResponsiveNavLink>
-            <ResponsiveNavLink :href="route('forfait')" :active="route().current('forfait')">
-              Forfaits
-            </ResponsiveNavLink>
           </div>
 
           <!-- Responsive Settings Options -->

@@ -29,14 +29,6 @@ Route::get('/', function () {
 
 Route::get('dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
-Route::get('organisation', function () {
-    return Organisation::all();
-})->middleware(['auth'])->name('organisation');
-
-Route::get('forfait', function () {
-    return Forfait::all();
-})->middleware(['auth'])->name('forfait');
-
 Route::group(['middleware' => 'auth'], function () {
     // CRUD Abonnements
     Route::get('abonnement', [AbonnementController::class, 'index'])->name('abonnement');
