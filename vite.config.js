@@ -21,6 +21,7 @@ export default defineConfig({
     build: {
         rollupOptions: {
             output: {
+                inlineDynamicImports: false,
                 manualChunks: {
                     'vue': ['vue'],
                     'echarts': ['echarts'],
