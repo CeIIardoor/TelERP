@@ -18,4 +18,15 @@ export default defineConfig({
             reactivityTransform: true,
         }),
     ],
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    'vue': ['vue'],
+                    'echarts': ['echarts'],
+                }
+            },
+        },
+        minify: 'terser'
+    }
 });
