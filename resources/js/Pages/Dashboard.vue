@@ -10,7 +10,7 @@
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200 flex justify-between">
-            <div>Données calculés du coté client (JS)</div>
+            <div>Données calculés du coté client (JS) - Todo : fix bug rerender</div>
             <div>
               <select
                 name="organisation_id"
@@ -164,7 +164,7 @@ function getOrgData() {
 
   abonnementsfiltres.forEach((abonnement) => {
     totalparmois.splice(0);
-    legend_data.push(abonnement.numero_ligne);
+    legend_data.push(abonnement.nom + " " + abonnement.prenom + " | " + abonnement.numero_ligne);
     let factures_data = props.factures.filter(
       (facture) =>
         facture.abonnement_id == abonnement.id && facture.date.split("-")[0] == 2022
@@ -174,10 +174,11 @@ function getOrgData() {
       totalparmois.push(facture.montant_supplementaire + abonnement.mensualite);
     });
     abonnement_series.push({
-      name: abonnement.numero_ligne,
+      name: abonnement.nom + " " + abonnement.prenom + " | " + abonnement.numero_ligne,
       type: "line",
       data: [...totalparmois],
     });
   });
+  console.log(abonnement_series)
 }
 </script>
